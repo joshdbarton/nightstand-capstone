@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import logout
 from django.http import HttpResponse
 
 
@@ -21,6 +22,7 @@ def register(request):
             return redirect('/dashboard')
 
     else:
+        logout(request)
         f = UserCreationForm()
 
     return render(request, 'nightstand_dashboard/registration.html', {'form': f})
