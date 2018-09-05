@@ -53,7 +53,12 @@ def book_view(request, pk):
         return HttpResponseForbidden()
 
 def book_add(request, pk):
-    pass
+    reader = Reader.objects.get(user=request.user)
+    book = Book.objects.get(pk=pk)
+    book.readers.add(reader)
+    for chapter in book.chapter_set.all():
+        ReaderChapter.objects.create(chapter=chapter, reader=reader)
+    return redirect(f"/books/{pk}")
 
 
 
