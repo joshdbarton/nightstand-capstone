@@ -32,10 +32,11 @@ class Book(models.Model):
     """
 
 
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
     ISBN = models.BigIntegerField()
     pages = models.IntegerField()
-    thumbnail = models.CharField(max_length=1000)
+    thumbnail = models.CharField(max_length=1023)
     readers = models.ManyToManyField(Reader, related_name="books")
 
     def __str__(self):
@@ -47,7 +48,7 @@ class Chapter(models.Model):
     """
 
 
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=255)
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
     readers = models.ManyToManyField(
         Reader, 
@@ -64,7 +65,7 @@ class Group(models.Model):
     """
 
 
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=255)
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
     readers = models.ManyToManyField(Reader, related_name="groups")
 
@@ -77,7 +78,7 @@ class ChapterComment(models.Model):
     """
 
 
-    content = models.CharField(max_length=500)
+    content = models.CharField(max_length=1023)
     datetime = models.DateField(auto_now=True)
     chapter = models.ForeignKey("Chapter", on_delete=models.CASCADE)
     reader = models.ForeignKey("Reader", on_delete=models.CASCADE)

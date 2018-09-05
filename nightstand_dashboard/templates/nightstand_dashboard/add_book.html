@@ -1,0 +1,10 @@
+{% extend base.html%}
+
+{% block content %}
+{% for book in books %}
+<div class="book-card">
+    <img src='{{book.image}}' alt="{{book.title}}" width="50">
+    <p>{{book.title}}</p>
+    <p>{{book.author}}</p>
+    <a href="#"><input type="button" value="+"/></a>
+</div>

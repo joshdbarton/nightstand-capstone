@@ -19,7 +19,7 @@ def register(request):
         if f.is_valid():
             f.save()
             messages.success(request, 'Account created successfully')
-            return redirect('/dashboard')
+            return redirect('/add_book')
 
     else:
         logout(request)
@@ -30,6 +30,10 @@ def register(request):
 def dashboard(request):
     return HttpResponse("<html><body>It's your dashboard!</body></html>")
 
+
+def add_book(request):
+    books = Book.objects.all()
+    return render(request, 'nightstand_dashboard/add_book.html', {'books': books })
 
 
 
