@@ -37,7 +37,7 @@ class Book(models.Model):
     ISBN = models.BigIntegerField()
     pages = models.IntegerField()
     thumbnail = models.CharField(max_length=1023)
-    readers = models.ManyToManyField(Reader, related_name="books")
+    readers = models.ManyToManyField(Reader, blank=True,  related_name="books")
 
     def __str__(self):
         return self.title

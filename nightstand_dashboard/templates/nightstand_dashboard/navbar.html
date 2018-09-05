@@ -1,29 +1,36 @@
-<nav class="navbar navbar-light navbar-expand-sm" style="background-color: #e3f2fd;">
+<nav class="navbar navbar-light navbar-expand-sm bg-light">
     <a class="navbar-brand" href="#">
         <img src="#" width="30" height="30" class="d-inline-block align-top" alt="">
         nightStand
       </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 {% if user.is_authenticated %}
-    <span>Welcome, {{user.username}}</span>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link 1</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link 2</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/logout">Log Out</a>
-        </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <span>Welcome, {{user.username}}</span>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/add-book">Add Book</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">My Nightstand</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Log Out</a>
+            </li>
+        </ul>
+    </div>  
 {% else %}
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a href="/registration">Register</a>
-        </li>
-        <li class="nav-item">
-            <a href="/login">Log in</a>
-        </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a href="/registration">Register</a>
+            </li>
+            <li class="nav-item">
+                <a href="/login">Log in</a>
+            </li>
+        </ul>
+    </div>
 {% endif %}
 </nav>

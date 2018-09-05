@@ -1,0 +1,12 @@
+{% extends 'nightstand_dashboard/base.html' %}
+
+{% block content %}
+<h1>{{book.title}}</h1>
+{% for book_chapter in book_chapters %}
+<div class="chapter-card">
+    <p>{{book_chapter.chapter}}</p>
+    <p>{{book_chapter.duedate}}</p>
+    <p>{{book_chapter.completed}}</p>
+</div>
+{% endfor %}
+{% endblock %}
