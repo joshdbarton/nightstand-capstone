@@ -50,7 +50,7 @@ def dashboard(request):
         progress = completed_count/chapter_count
         context["books"][book.id].append(progress)
     context['comments'] = sorted(comments, reverse=True, key= lambda k: k.datetime)[:15]
-    print(len(context["comments"]))
+    context["reader"] = reader
     return render(request, "nightstand_dashboard/dashboard.html", context)
 
 
