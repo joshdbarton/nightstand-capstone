@@ -1,12 +1,16 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-<h1>{{book.title}}</h1>
+<div class="book-detail-card">
+    <img src="{{book.thumbnail}}" alt="{{book.title}} cover"/>
+    <h1>{{book.title}}</h1>
+</div>
 {% for book_chapter in book_chapters %}
 <div class="chapter-card">
-    <p>{{book_chapter.chapter}}</p>
-    <p>{{book_chapter.duedate}}</p>
-    <p>{{book_chapter.completed}}</p>
+    <p>Chapter: {{book_chapter.chapter}}</p>
+    <input type="date" value="{{book_chapter.duedate}}"/>
+    <input id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
+    <input type="button" value="completed" id="chapterComplete-{{book_chapter.id}}"/>
 </div>
 {% endfor %}
 {% endblock %}
