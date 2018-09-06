@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
 from django.http import HttpResponse, HttpResponseForbidden
-from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter
+from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment
 
 
 
@@ -32,6 +32,7 @@ def dashboard(request):
     reader = Reader.objects.get(user=request.user)
     books = reader.books.all()
     context = {"books": dict()}
+    comments = list()
     for book in books:
         context['books'][book.id] = [book.title, book.thumbnail]
         progress = 0
@@ -40,11 +41,16 @@ def dashboard(request):
         chapter_count = 0
         completed_count = 0
         for chapter in chapters:
+            chapter_comments = chapter.chaptercomment_set.all()
+            if chapter_comments.count() > 0:
+                comments.extend(chapter_comments)
             if ReaderChapter.objects.get(reader=reader, chapter=chapter).completed:
                 completed_count += 1
             chapter_count += 1
         progress = completed_count/chapter_count
         context["books"][book.id].append(progress)
+    context['comments'] = sorted(comments, reverse=True, key= lambda k: k.datetime)[:15]
+    print(len(context["comments"]))
     return render(request, "nightstand_dashboard/dashboard.html", context)
 
 
@@ -56,7 +62,6 @@ def book_view(request, pk):
     reader = Reader.objects.get(user=request.user)
     book = Book.objects.get(pk=pk)
     chapters = Chapter.objects.filter(book=book)
-
     if request.method == "GET":
         book_chapters = list()
         book_comments = list()

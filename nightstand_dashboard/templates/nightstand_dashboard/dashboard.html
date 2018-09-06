@@ -9,4 +9,15 @@
 
 </div>
 {% endfor %}
+<div id="dashboard-comments">
+    <h3>Recent Comments</h3>
+    {% for comment in comments %}
+    <div class="comment-card">
+        <h5>{{comment}}</h5>
+        <h6>{{comment.chapter}}</h6>
+        <h6>{{comment.chapter.book}}</h6>
+        <p>{{comment.content}}</p>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
