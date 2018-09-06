@@ -26,4 +26,14 @@
     </div>
     {% endfor %}
 </div>
+<div id="dashboard-to-do">
+    <h3>What should I read today?</h3>
+    {% for chapter in to_do %}
+    <div class="chapter-card">
+        <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
+        <p>{{chapter.duedate}}</p>
+        <input id="reader-chapter-{{chapter.id}}" type="button" value="Completed!"/>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
