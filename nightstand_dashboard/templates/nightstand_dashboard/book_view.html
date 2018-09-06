@@ -6,11 +6,19 @@
     <h1>{{book.title}}</h1>
 </div>
 {% for book_chapter in book_chapters %}
+{% if book_chapter.completed %}
+<div class="chapter-card completed">
+{% elif book_chapter.duedate < now %}
+<div class="chapter-card overdue">
+{% else %}
 <div class="chapter-card">
+{% endif %}
     <p>Chapter: {{book_chapter.chapter}}</p>
     <input type="date" value="{{book_chapter.duedate}}"/>
     <input id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
+    {% if not book_chapter.completed%}
     <input type="button" value="completed" id="chapterComplete-{{book_chapter.id}}"/>
+    {% endif %}
 </div>
 {% endfor %}
 {% endblock %}
