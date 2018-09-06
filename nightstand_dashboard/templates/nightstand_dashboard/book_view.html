@@ -14,11 +14,27 @@
 <div class="chapter-card">
 {% endif %}
     <p>Chapter: {{book_chapter.chapter}}</p>
-    <input type="date" value="{{book_chapter.duedate}}"/>
+    <input id="chapterDueDateField-{{book_chapter.id}}" type="date" value="{{book_chapter.duedate}}"/>
     <input id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
     {% if not book_chapter.completed%}
     <input type="button" value="completed" id="chapterComplete-{{book_chapter.id}}"/>
     {% endif %}
 </div>
 {% endfor %}
+<div id="book-detail-comments">
+        <h3>Comments</h3>
+        {% for comment in comments %}
+        <div class="comment-card">
+            <h5>{{comment}}</h5>
+            <h6>Chapter: {{comment.chapter}}</h6>
+            <p>{{comment.content}}</p>
+            {% if reader in comment.likes.all %}
+            <input class="like-button" id="comment-{{comment.id}}" type="button" value="unlike"/>
+            {% else %}
+            <input class="like-button" id="comment-{{comment.id}}" type="button" value="like"/>
+            {% endif %}
+            <p>Likes: {{comment.likes.count}}</p>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}
