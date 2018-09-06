@@ -17,12 +17,12 @@
         <h6>{{comment.chapter}}</h6>
         <h6>{{comment.chapter.book}}</h6>
         <p>{{comment.content}}</p>
-        {% if reader in comment.like_set.readers %}
+        {% if reader in comment.likes.all %}
         <input class="like-button" id="comment-{{comment.id}}" type="button" value="unlike"/>
         {% else %}
         <input class="like-button" id="comment-{{comment.id}}" type="button" value="like"/>
         {% endif %}
-        <p>Likes: {{comment.like_set.count}}</p>
+        <p>Likes: {{comment.likes.count}}</p>
     </div>
     {% endfor %}
 </div>

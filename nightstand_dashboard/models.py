@@ -82,21 +82,22 @@ class ChapterComment(models.Model):
     datetime = models.DateField(auto_now=True)
     chapter = models.ForeignKey("Chapter", on_delete=models.CASCADE)
     reader = models.ForeignKey("Reader", on_delete=models.CASCADE)
+    likes = models.ManyToManyField(Reader, related_name="liked_comments")
 
     def __str__(self):
         return f'{self.reader}: {self.datetime}'
 
 
 
-class Like(models.Model):
-    """Represents a user's like of a comment"""
+# class Like(models.Model):
+#     """Represents a user's like of a comment"""
 
 
-    reader = models.ForeignKey('Reader', on_delete=models.CASCADE)
-    comment = models.ForeignKey('ChapterComment', on_delete=models.CASCADE)
+#     reader = models.ForeignKey('Reader', on_delete=models.CASCADE)
+#     comment = models.ForeignKey('ChapterComment', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.reader
+#     def __str__(self):
+#         return f'{self.reader}: {self.comment}'
 
 
 class ReaderChapter(models.Model):

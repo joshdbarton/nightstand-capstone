@@ -6,3 +6,4 @@ admin.site.register(Book)
 admin.site.register(Chapter)
 admin.site.register(Reader)
 admin.site.register(ChapterComment)
+
