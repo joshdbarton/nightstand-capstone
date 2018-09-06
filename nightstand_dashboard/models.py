@@ -39,6 +39,18 @@ class Book(models.Model):
     thumbnail = models.CharField(max_length=1023)
     readers = models.ManyToManyField(Reader, blank=True,  related_name="books")
 
+    # def progress(self, reader):
+    #     progress = 0
+    #     chapters = Chapter.objects.filter(book=self)
+    #     book_chapters = list()
+    #     chapter_count = 0
+    #     completed_count = 0
+    #     for chapter in chapters:
+    #         if ReaderChapter.objects.get(reader=reader, chapter=chapter).completed:
+    #             completed_count += 1
+    #         chapter_count += 1
+    #     return completed_count/chapter_count
+
     def __str__(self):
         return self.title
 

@@ -29,7 +29,23 @@ def register(request):
     return render(request, 'nightstand_dashboard/registration.html', {'form': f})
 
 def dashboard(request):
-    return HttpResponse("<html><body>It's your dashboard!</body></html>")
+    reader = Reader.objects.get(user=request.user)
+    books = reader.books.all()
+    context = {"books": dict()}
+    for book in books:
+        context['books'][book.id] = [book.title, book.thumbnail]
+        progress = 0
+        chapters = Chapter.objects.filter(book=book)
+        book_chapters = list()
+        chapter_count = 0
+        completed_count = 0
+        for chapter in chapters:
+            if ReaderChapter.objects.get(reader=reader, chapter=chapter).completed:
+                completed_count += 1
+            chapter_count += 1
+        progress = completed_count/chapter_count
+        context["books"][book.id].append(progress)
+    return render(request, "nightstand_dashboard/dashboard.html", context)
 
 
 def add_book(request):
@@ -44,10 +60,9 @@ def book_view(request, pk):
     if request.method == "GET":
         book_chapters = list()
         book_comments = list()
-        reader_chapters = ReaderChapter.objects.all()
         for chapter in chapters:
-            book_chapters.append(ReaderChapter.objects.get(chapter=chapter))
-            book_comments = chapter.chaptercomment_set.all()
+            book_chapters.append(ReaderChapter.objects.get(chapter=chapter, reader=reader))
+            book_comments += chapter.chaptercomment_set.all()
         return render(request, 'nightstand_dashboard/book_view.html', {"book": book, "book_chapters": book_chapters, "book_comments": book_comments})
     else:
         return HttpResponseForbidden()
