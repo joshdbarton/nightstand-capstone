@@ -91,7 +91,7 @@ def like(request, pk):
         comment.likes.remove(reader)
     else:
         comment.likes.add(reader)
-    return redirect(request.GET['next'])
+    return HttpResponse("OK")
     
 
 

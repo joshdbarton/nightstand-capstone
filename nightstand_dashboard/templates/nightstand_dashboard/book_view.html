@@ -7,17 +7,17 @@
 </div>
 {% for book_chapter in book_chapters %}
 {% if book_chapter.completed %}
-<div class="chapter-card completed">
+<div class="chapter-card completed" id="chapter-card-{{book_chapter.id}}">
 {% elif book_chapter.duedate < now %}
-<div class="chapter-card overdue">
+<div class="chapter-card overdue" id="chapter-card-{{book_chapter.id}}">
 {% else %}
-<div class="chapter-card">
+<div class="chapter-card" id="chapter-card-{{book_chapter.id}}">
 {% endif %}
     <p>Chapter: {{book_chapter.chapter}}</p>
     <input id="chapterDueDateField-{{book_chapter.id}}" type="date" value="{{book_chapter.duedate}}"/>
     <input id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
     {% if not book_chapter.completed%}
-    <a href="/complete/{{book_chapter.id}}?next={{request.path}}"><input type="button" value="completed"/></a>
+    <input class="chapter-complete" id="chapter-{{book_chapter.id}}" type="button" value="completed"/>
     {% endif %}
     <a href="/comment/{{book_chapter.chapter.id}}"><input type="button" value="add comment" /></a>
 </div>
@@ -30,9 +30,9 @@
             <h6>Chapter: {{comment.chapter}}</h6>
             <p>{{comment.content}}</p>
             {% if reader in comment.likes.all %}
-            <a href="/like/{{comment.id}}?next={{request.path}}"><input class="like-button" type="button" value="unlike"/></a>
+            <input id="comment-{{comment.id}}" class="like-button" type="button" value="unlike"/>
             {% else %}
-            <a href="/like/{{comment.id}}?next={{request.path}}"><input class="like-button" type="button" value="like"/></a>
+            <input id="comment-{{comment.id}}" class="like-button" type="button" value="like"/>
             {% endif %}
             <p>Likes: {{comment.likes.count}}</p>
         </div>

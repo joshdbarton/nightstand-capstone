@@ -29,10 +29,10 @@
 <div id="dashboard-to-do">
     <h3>What should I read today?</h3>
     {% for chapter in to_do %}
-    <div class="chapter-card">
+    <div class="chapter-card" id="chapter-card-{{chapter.id}}">
         <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
         <p>{{chapter.duedate}}</p>
-        <a href="/complete/{{chapter.id}}?next={{request.path}}"><input id="reader-chapter-{{chapter.id}}" type="button" value="Completed!"/></a>
+        <a href="/complete/{{chapter.id}}?next={{request.path}}"><input class="chapter-complete" id="chapter-{{chapter.id}}-dashboard" type="button" value="Completed!"/></a>
     </div>
     {% endfor %}
 </div>
