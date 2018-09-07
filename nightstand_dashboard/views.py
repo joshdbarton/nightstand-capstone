@@ -52,7 +52,7 @@ def dashboard(request):
         context["books"][book.id].append(progress)
     context['comments'] = sorted(comments, reverse=True, key= lambda k: k.datetime)[:15]
     context["reader"] = reader
-    context["to_do"] = ReaderChapter.objects.filter(reader=reader).order_by('duedate')[:5]
+    context["to_do"] = ReaderChapter.objects.filter(reader=reader, completed=False).order_by('duedate')[:5]
     return render(request, "nightstand_dashboard/dashboard.html", context)
 
 
@@ -83,18 +83,16 @@ def book_add(request, pk):
         ReaderChapter.objects.create(chapter=chapter, reader=reader)
     return redirect(f"/books/{pk}")
 
-# like/commentid
+
 def like(request, pk):
-    if request.method == "POST":
-        chapter = Chapter.objects.get(pk=pk)
-        reader = Reader.objects.get(user=request.user)
-        if reader in chapter.likes.all():
-            chapter.likes.remove(reader)
-        else:
-            chapter.likes.add(reader)
-        #what to return this morning?
+    comment = ChapterComment.objects.get(pk=pk)
+    reader = Reader.objects.get(user=request.user)
+    if reader in comment.likes.all():
+        comment.likes.remove(reader)
     else:
-        return HttpResponseForbidden()
+        comment.likes.add(reader)
+    return redirect(request.GET['next'])
+    
 
 
 def comment_view(request, pk):
@@ -112,6 +110,12 @@ def comment_view(request, pk):
         form = CommentForm()
 
     return render(request, f"nightstand_dashboard/add_comment.html", {"form": form, "chapter": chapter})
+
+def complete_chapter(request, pk):
+    ReaderChapter.objects.filter(pk=pk).update(completed=True)
+    return redirect(request.GET['next'])
+
+
 
 
 
