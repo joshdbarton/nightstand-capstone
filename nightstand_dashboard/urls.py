@@ -11,4 +11,5 @@ urlpatterns = [
     path("add_book/", views.add_book, name="add_book"),
     path("books/<int:pk>", views.book_view, name="book_view"),
     path("book_add/<int:pk>", views.book_add, name="book_add"),
+    path("comment/<int:pk>", views.comment_view, name="add_comment")
 ]

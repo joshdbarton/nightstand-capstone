@@ -19,6 +19,7 @@
     {% if not book_chapter.completed%}
     <input type="button" value="completed" id="chapterComplete-{{book_chapter.id}}"/>
     {% endif %}
+    <a href="/comment/{{book_chapter.chapter.id}}"><input type="button" value="add comment" /></a>
 </div>
 {% endfor %}
 <div id="book-detail-comments">

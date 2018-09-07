@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
 from django.http import HttpResponse, HttpResponseForbidden
 from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment
+from nightstand_dashboard.forms import CommentForm
 
 
 
@@ -81,6 +82,39 @@ def book_add(request, pk):
     for chapter in book.chapter_set.all():
         ReaderChapter.objects.create(chapter=chapter, reader=reader)
     return redirect(f"/books/{pk}")
+
+# like/commentid
+def like(request, pk):
+    if request.method == "POST":
+        chapter = Chapter.objects.get(pk=pk)
+        reader = Reader.objects.get(user=request.user)
+        if reader in chapter.likes.all():
+            chapter.likes.remove(reader)
+        else:
+            chapter.likes.add(reader)
+        #what to return this morning?
+    else:
+        return HttpResponseForbidden()
+
+
+def comment_view(request, pk):
+    reader = Reader.objects.get(user=request.user)
+    chapter = Chapter.objects.get(pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.reader = reader
+            new_comment.chapter = chapter
+            new_comment.save()
+            return redirect(f'/books/{chapter.book.id}')
+    else:
+        form = CommentForm()
+
+    return render(request, f"nightstand_dashboard/add_comment.html", {"form": form, "chapter": chapter})
+
+
+
 
 
 
