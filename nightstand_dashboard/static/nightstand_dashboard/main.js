@@ -32,6 +32,7 @@ $(".chapter-complete").onclick(event => {
     if ($(`#${event.target.id.split("-")[2]}`) === "dashboard") {
         $(`#chapter-card-${event.target.id.split("-")[1]}`).remove()
     } else {
-        
+        $(`#${event.target.id}`).remove()
+        // change class to reflect completed on card. 
     }
 })

@@ -113,7 +113,7 @@ def comment_view(request, pk):
 
 def complete_chapter(request, pk):
     ReaderChapter.objects.filter(pk=pk).update(completed=True)
-    return redirect(request.GET['next'])
+    return HttpResponse("OK")
 
 
 
