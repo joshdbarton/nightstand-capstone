@@ -32,11 +32,12 @@ class Book(models.Model):
     """
 
 
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255)
     ISBN = models.BigIntegerField()
     pages = models.IntegerField()
-    thumbnail = models.CharField(max_length=1000)
-    readers = models.ManyToManyField(Reader, related_name="books")
+    thumbnail = models.CharField(max_length=1023)
+    readers = models.ManyToManyField(Reader, blank=True,  related_name="books")
 
     def __str__(self):
         return self.title
@@ -47,7 +48,7 @@ class Chapter(models.Model):
     """
 
 
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=255)
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
     readers = models.ManyToManyField(
         Reader, 
@@ -64,7 +65,7 @@ class Group(models.Model):
     """
 
 
-    name = models.CharField(max_length=250)
+    name = models.CharField(max_length=255)
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
     readers = models.ManyToManyField(Reader, related_name="groups")
 
@@ -77,25 +78,26 @@ class ChapterComment(models.Model):
     """
 
 
-    content = models.CharField(max_length=500)
+    content = models.CharField(max_length=1023)
     datetime = models.DateField(auto_now=True)
     chapter = models.ForeignKey("Chapter", on_delete=models.CASCADE)
     reader = models.ForeignKey("Reader", on_delete=models.CASCADE)
+    likes = models.ManyToManyField(Reader, related_name="liked_comments")
 
     def __str__(self):
         return f'{self.reader}: {self.datetime}'
 
 
 
-class Like(models.Model):
-    """Represents a user's like of a comment"""
+# class Like(models.Model):
+#     """Represents a user's like of a comment"""
 
 
-    reader = models.ForeignKey('Reader', on_delete=models.CASCADE)
-    comment = models.ForeignKey('ChapterComment', on_delete=models.CASCADE)
+#     reader = models.ForeignKey('Reader', on_delete=models.CASCADE)
+#     comment = models.ForeignKey('ChapterComment', on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.reader
+#     def __str__(self):
+#         return f'{self.reader}: {self.comment}'
 
 
 class ReaderChapter(models.Model):

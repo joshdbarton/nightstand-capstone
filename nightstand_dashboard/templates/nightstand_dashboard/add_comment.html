@@ -1,0 +1,11 @@
+{% extends 'nightstand_dashboard/base.html' %}
+
+{% block content %}
+<h3>Add Comment:</h3>
+<h4>{{chapter.book}}: {{chapter}}</h4>
+<form method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Submit Comment</button>
+</form>
+{% endblock%}

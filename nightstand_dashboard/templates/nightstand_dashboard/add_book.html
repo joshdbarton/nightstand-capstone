@@ -1,0 +1,12 @@
+{% extends 'nightstand_dashboard/base.html' %}
+
+{% block content %}
+{% for book in books %}
+<div class="book-card">
+    <img src='{{book.thumbnail}}' alt="{{book.title}}" width="50">
+    <p>{{book.title}}</p>
+    <p>{{book.author}}</p>
+    <a href="/book_add/{{book.id}}"><input type="button" value="+"/></a>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'nightstand_dashboard/base.html' %}
+
+{% block content %}
+<div class="book-detail-card">
+    <img src="{{book.thumbnail}}" alt="{{book.title}} cover"/>
+    <h1>{{book.title}}</h1>
+</div>
+{% for book_chapter in book_chapters %}
+{% if book_chapter.completed %}
+<div class="chapter-card completed">
+{% elif book_chapter.duedate < now %}
+<div class="chapter-card overdue">
+{% else %}
+<div class="chapter-card">
+{% endif %}
+    <p>Chapter: {{book_chapter.chapter}}</p>
+    <input id="chapterDueDateField-{{book_chapter.id}}" type="date" value="{{book_chapter.duedate}}"/>
+    <input id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
+    {% if not book_chapter.completed%}
+    <input type="button" value="completed" id="chapterComplete-{{book_chapter.id}}"/>
+    {% endif %}
+    <a href="/comment/{{book_chapter.chapter.id}}"><input type="button" value="add comment" /></a>
+</div>
+{% endfor %}
+<div id="book-detail-comments">
+        <h3>Comments</h3>
+        {% for comment in comments %}
+        <div class="comment-card">
+            <h5>{{comment}}</h5>
+            <h6>Chapter: {{comment.chapter}}</h6>
+            <p>{{comment.content}}</p>
+            {% if reader in comment.likes.all %}
+            <input class="like-button" id="comment-{{comment.id}}" type="button" value="unlike"/>
+            {% else %}
+            <input class="like-button" id="comment-{{comment.id}}" type="button" value="like"/>
+            {% endif %}
+            <p>Likes: {{comment.likes.count}}</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

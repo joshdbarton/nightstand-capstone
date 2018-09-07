@@ -1,0 +1,39 @@
+{% extends 'nightstand_dashboard/base.html' %}
+
+{% block content %}
+{% for id, values in books.items %}
+<div class="dashboard-book-card">
+    <img src="{{values.1}}" alt="{{values.0}}" width="50"/>
+    <p><a href="/books/{{id}}">{{values.0}}</a></p>
+    <p>Progress: {{values.2}}</p>
+
+</div>
+{% endfor %}
+<div id="dashboard-comments">
+    <h3>Recent Comments</h3>
+    {% for comment in comments %}
+    <div class="comment-card">
+        <h5>{{comment}}</h5>
+        <h6>{{comment.chapter}}</h6>
+        <h6>{{comment.chapter.book}}</h6>
+        <p>{{comment.content}}</p>
+        {% if reader in comment.likes.all %}
+        <input class="like-button" id="comment-{{comment.id}}" type="button" value="unlike"/>
+        {% else %}
+        <input class="like-button" id="comment-{{comment.id}}" type="button" value="like"/>
+        {% endif %}
+        <p>Likes: {{comment.likes.count}}</p>
+    </div>
+    {% endfor %}
+</div>
+<div id="dashboard-to-do">
+    <h3>What should I read today?</h3>
+    {% for chapter in to_do %}
+    <div class="chapter-card">
+        <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
+        <p>{{chapter.duedate}}</p>
+        <input id="reader-chapter-{{chapter.id}}" type="button" value="Completed!"/>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
