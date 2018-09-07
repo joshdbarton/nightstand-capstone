@@ -52,7 +52,7 @@ def dashboard(request):
         context["books"][book.id].append(progress)
     context['comments'] = sorted(comments, reverse=True, key= lambda k: k.datetime)[:15]
     context["reader"] = reader
-    context["to_do"] = ReaderChapter.objects.all().order_by('duedate')[:5]
+    context["to_do"] = ReaderChapter.objects.filter(reader=reader).order_by('duedate')[:5]
     return render(request, "nightstand_dashboard/dashboard.html", context)
 
 
