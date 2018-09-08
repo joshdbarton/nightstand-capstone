@@ -18,11 +18,12 @@
         <h6>{{comment.chapter.book}}</h6>
         <p>{{comment.content}}</p>
         {% if reader in comment.likes.all %}
-        <a href="/like/{{comment.id}}?next={{request.path}}"><input class="like-button" id="comment-{{comment.id}}" type="button" value="unlike"/></a>
+        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Unlike"/>
         {% else %}
-        <a href="/like/{{comment.id}}?next={{request.path}}"><input class="like-button" id="comment-{{comment.id}}" type="button" value="like"/></a>
+        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Like"/>
         {% endif %}
-        <p>Likes: {{comment.likes.count}}</p>
+        <p>Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p> 
+        
     </div>
     {% endfor %}
 </div>
@@ -32,7 +33,7 @@
     <div class="chapter-card" id="chapter-card-{{chapter.id}}">
         <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
         <p>{{chapter.duedate}}</p>
-        <a href="/complete/{{chapter.id}}?next={{request.path}}"><input class="chapter-complete" id="chapter-{{chapter.id}}-dashboard" type="button" value="Completed!"/></a>
+        <input class="chapter-complete" id="chapter-{{chapter.id}}-dashboard" type="button" value="Completed!"/>
     </div>
     {% endfor %}
 </div>

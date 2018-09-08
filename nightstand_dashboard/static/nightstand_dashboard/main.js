@@ -1,28 +1,33 @@
-
-
-
-
 // event handler for likes
-$(".like-button").onclick(event => {
-    fetch(`/like/${event.target.id.split("-")[1]}`, {
+$(".like-button").click(event => {
+    $.ajax(`http://127.0.0.1:8000/like/${event.target.id.split("-")[1]}`, {
         "method": 'GET',
-        "body": {},
+        "data": {},
+        "credentials": "include",
         "headers": {
-            "X-CSRFToken": browser.cookies.get('csrftoken'),
-            "Accept": "application/json",
+            "X-CSRFToken": document.cookie.split("=")[1],
             "Content-Type": "application/json",
         }
     })
-    event.target.value == "Like" ? $(`#${event.target.id}`).val("Unlike"):$(`#${event.target.id}`).val("Like")
+    if (event.target.value == "Like") {
+        $(`#${event.target.id}`).val("Unlike")
+        let likeCount = parseInt($(`#like-count-${event.target.id.split("-")[1]}`).text());
+        likeCount ++;
+        $(`#like-count-${event.target.id.split("-")[1]}`).text( likeCount.toString())
+    } else {
+        $(`#${event.target.id}`).val("Like")
+        let likeCount = parseInt($(`#like-count-${event.target.id.split("-")[1]}`).text());
+        likeCount --;
+        $(`#like-count-${event.target.id.split("-")[1]}`).text(likeCount.toString())
+    }      
 })
-// event handler to update duedate
-
 
 // event handler for completing chapters
-$(".chapter-complete").onclick(event => {
-    fetch(`/complete/${event.target.id.split("-")[1]}`, {
+$(".chapter-complete").click(event => {
+    $.ajax(`http://127.0.0.1:8000/complete/${event.target.id.split("-")[1]}`, {
         "method": 'GET',
-        "body": {},
+        "data": {},
+        "credentials": "include",
         "headers": {
             "X-CSRFToken": browser.cookies.get('csrftoken'),
             "Accept": "application/json",
@@ -33,6 +38,8 @@ $(".chapter-complete").onclick(event => {
         $(`#chapter-card-${event.target.id.split("-")[1]}`).remove()
     } else {
         $(`#${event.target.id}`).remove()
-        // change class to reflect completed on card. 
+        $(`#chapter-card-${event.target.id.split("-")[1]}`).addClass("completed") 
     }
 })
+
+// event handler to update duedate
