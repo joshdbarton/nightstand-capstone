@@ -88,18 +88,6 @@ class ChapterComment(models.Model):
         return f'{self.reader}: {self.datetime}'
 
 
-
-# class Like(models.Model):
-#     """Represents a user's like of a comment"""
-
-
-#     reader = models.ForeignKey('Reader', on_delete=models.CASCADE)
-#     comment = models.ForeignKey('ChapterComment', on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f'{self.reader}: {self.comment}'
-
-
 class ReaderChapter(models.Model):
     """Represents a user's progress in a book's chapters
     """
