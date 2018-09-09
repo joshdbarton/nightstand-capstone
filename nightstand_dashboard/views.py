@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -95,7 +96,6 @@ def like(request, pk):
     return HttpResponse("OK")
     
 
-
 def comment_view(request, pk):
     reader = Reader.objects.get(user=request.user)
     chapter = Chapter.objects.get(pk=pk)
@@ -117,7 +117,10 @@ def complete_chapter(request, pk):
     return HttpResponse("OK")
 
 def duedate(request, pk):
-    print("yay!")
+    chapter = ReaderChapter.objects.filter(pk=pk)
+    if request.method == "POST":
+        newdate = json.loads(request.body.decode("utf-8"))["newdate"]
+        chapter.update(duedate=newdate)
     return HttpResponse("OK")
 
 

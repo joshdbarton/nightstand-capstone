@@ -50,7 +50,7 @@ $(".duedate-update").click(event => {
     $.ajax(`http://127.0.0.1:8000/duedate/${chapt}`, 
     {
         "method": "POST", 
-        "data": {"newdate": newdate},
+        "data": JSON.stringify({"newdate": newdate}),
         "credentials": "include",
         "headers": {
             "X-CSRFToken": document.cookie.split("=")[1],
