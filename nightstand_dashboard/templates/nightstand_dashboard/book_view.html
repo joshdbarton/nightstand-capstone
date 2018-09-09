@@ -15,7 +15,7 @@
 {% endif %}
     <p>Chapter: {{book_chapter.chapter}}</p>
     <input id="chapterDueDateField-{{book_chapter.id}}" type="date" value="{{book_chapter.duedate|date:'Y-m-d'}}"/>
-    <input id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
+    <input class="duedate-update" id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
     {% if not book_chapter.completed%}
     <input class="chapter-complete" id="chapter-{{book_chapter.id}}" type="button" value="completed"/>
     {% endif %}

@@ -116,6 +116,10 @@ def complete_chapter(request, pk):
     ReaderChapter.objects.filter(pk=pk).update(completed=True)
     return HttpResponse("OK")
 
+def duedate(request, pk):
+    print("yay!")
+    return HttpResponse("OK")
+
 
 
 

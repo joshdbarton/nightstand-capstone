@@ -14,4 +14,5 @@ urlpatterns = [
     path("comment/<int:pk>", views.comment_view, name="add_comment"),
     path("like/<int:pk>", views.like, name="like"),
     path("complete/<int:pk>", views.complete_chapter, name="complete"),
+    path("duedate/<int:pk>", views.duedate, name="duedate"),
 ]
