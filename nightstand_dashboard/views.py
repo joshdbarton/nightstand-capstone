@@ -85,7 +85,6 @@ def book_add(request, pk):
 
 
 def like(request, pk):
-    print("it's working")
     comment = ChapterComment.objects.get(pk=pk)
     reader = Reader.objects.get(user=request.user)
     if reader in comment.likes.all():

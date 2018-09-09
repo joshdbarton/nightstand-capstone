@@ -29,16 +29,16 @@ $(".chapter-complete").click(event => {
         "data": {},
         "credentials": "include",
         "headers": {
-            "X-CSRFToken": browser.cookies.get('csrftoken'),
+            "X-CSRFToken": document.cookie.split("=")[1],
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
     })
-    if ($(`#${event.target.id.split("-")[2]}`) === "dashboard") {
+    if (event.target.id.split("-")[2] === "dashboard") {
         $(`#chapter-card-${event.target.id.split("-")[1]}`).remove()
     } else {
         $(`#${event.target.id}`).remove()
-        $(`#chapter-card-${event.target.id.split("-")[1]}`).addClass("completed") 
+        $(`#chapter-card-${event.target.id.split("-")[1]}`).removeClass("overdue").addClass("completed") 
     }
 })
 
