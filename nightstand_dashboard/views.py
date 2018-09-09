@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponse, HttpResponseForbidden
 from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment
 from nightstand_dashboard.forms import CommentForm
@@ -20,7 +20,8 @@ def register(request):
         f = UserCreationForm(request.POST)
         if f.is_valid():
             f.save()
-            messages.success(request, 'Account created successfully')
+            new_user = authenticate(username=f.cleaned_data["username"], password=f.cleaned_data["password1"])
+            login(request, new_user)
             return redirect('/add_book')
 
     else:

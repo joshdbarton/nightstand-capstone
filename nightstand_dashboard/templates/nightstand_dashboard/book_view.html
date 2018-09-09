@@ -34,7 +34,7 @@
             {% else %}
             <input id="comment-{{comment.id}}" class="like-button" type="button" value="Like"/>
             {% endif %}
-            <p id="like-count-{{comment.id}}">Likes: {{comment.likes.count}}</p>
+            <p >Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p>
         </div>
         {% endfor %}
     </div>
