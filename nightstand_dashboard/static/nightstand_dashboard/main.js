@@ -9,7 +9,7 @@ $(".like-button").click(event => {
             "Content-Type": "application/json",
         }
     })
-    if (event.target.value == "Like") {
+    if (event.target.value === "Like") {
         $(`#${event.target.id}`).val("Unlike")
         let likeCount = parseInt($(`#like-count-${event.target.id.split("-")[1]}`).text());
         likeCount ++;
