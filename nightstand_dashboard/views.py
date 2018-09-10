@@ -65,12 +65,8 @@ def add_book(request):
         param = {form.data['search_field']: form.data['search_term'].replace(" ", "+")}
         r = requests.get('http://openlibrary.org/search.json', params=param)
         results = json.loads(r.text)
-        for doc in results["docs"]:
-            if "author_name" in doc.keys():
-                print(doc["author_name"][0])
-            else:
-                print("None")
-        return HttpResponse("OK")
+        display_results = [{"title": result["title"], "author": result["author_name"][0], "thumbnail": f'http://covers.openlibrary.org/b/id/{result["cover_i"]}-S.jpg'} for result in results["docs"] if "title" in result.keys() and "author_name" in result.keys() and "cover_i" in result.keys()]
+        return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": display_results})
     else:
         form = SearchForm()
         return render(request, 'nightstand_dashboard/add_book.html', {"form": form })
