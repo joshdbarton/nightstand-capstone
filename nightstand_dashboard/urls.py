@@ -11,5 +11,8 @@ urlpatterns = [
     path("add_book/", views.add_book, name="add_book"),
     path("books/<int:pk>", views.book_view, name="book_view"),
     path("book_add/<int:pk>", views.book_add, name="book_add"),
-    path("comment/<int:pk>", views.comment_view, name="add_comment")
+    path("comment/<int:pk>", views.comment_view, name="add_comment"),
+    path("like/<int:pk>", views.like, name="like"),
+    path("complete/<int:pk>", views.complete_chapter, name="complete"),
+    path("duedate/<int:pk>", views.duedate, name="duedate"),
 ]

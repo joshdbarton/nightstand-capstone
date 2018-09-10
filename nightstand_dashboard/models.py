@@ -1,4 +1,5 @@
 from django.db import models
+import datetime 
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -88,18 +89,6 @@ class ChapterComment(models.Model):
         return f'{self.reader}: {self.datetime}'
 
 
-
-# class Like(models.Model):
-#     """Represents a user's like of a comment"""
-
-
-#     reader = models.ForeignKey('Reader', on_delete=models.CASCADE)
-#     comment = models.ForeignKey('ChapterComment', on_delete=models.CASCADE)
-
-#     def __str__(self):
-#         return f'{self.reader}: {self.comment}'
-
-
 class ReaderChapter(models.Model):
     """Represents a user's progress in a book's chapters
     """
@@ -112,3 +101,10 @@ class ReaderChapter(models.Model):
 
     def __str__(self):
         return f'{self.reader}: {self.chapter}'
+    
+    @property
+    def is_late(self):
+        if self.duedate:
+            return self.duedate < datetime.date.today()
+        else:
+            return False

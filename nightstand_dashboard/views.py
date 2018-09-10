@@ -1,8 +1,9 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponse, HttpResponseForbidden
 from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment
 from nightstand_dashboard.forms import CommentForm
@@ -20,7 +21,8 @@ def register(request):
         f = UserCreationForm(request.POST)
         if f.is_valid():
             f.save()
-            messages.success(request, 'Account created successfully')
+            new_user = authenticate(username=f.cleaned_data["username"], password=f.cleaned_data["password1"])
+            login(request, new_user)
             return redirect('/add_book')
 
     else:
@@ -52,7 +54,7 @@ def dashboard(request):
         context["books"][book.id].append(progress)
     context['comments'] = sorted(comments, reverse=True, key= lambda k: k.datetime)[:15]
     context["reader"] = reader
-    context["to_do"] = ReaderChapter.objects.filter(reader=reader).order_by('duedate')[:5]
+    context["to_do"] = ReaderChapter.objects.filter(reader=reader, completed=False).order_by('duedate')[:5]
     return render(request, "nightstand_dashboard/dashboard.html", context)
 
 
@@ -83,19 +85,16 @@ def book_add(request, pk):
         ReaderChapter.objects.create(chapter=chapter, reader=reader)
     return redirect(f"/books/{pk}")
 
-# like/commentid
-def like(request, pk):
-    if request.method == "POST":
-        chapter = Chapter.objects.get(pk=pk)
-        reader = Reader.objects.get(user=request.user)
-        if reader in chapter.likes.all():
-            chapter.likes.remove(reader)
-        else:
-            chapter.likes.add(reader)
-        #what to return this morning?
-    else:
-        return HttpResponseForbidden()
 
+def like(request, pk):
+    comment = ChapterComment.objects.get(pk=pk)
+    reader = Reader.objects.get(user=request.user)
+    if reader in comment.likes.all():
+        comment.likes.remove(reader)
+    else:
+        comment.likes.add(reader)
+    return HttpResponse("OK")
+    
 
 def comment_view(request, pk):
     reader = Reader.objects.get(user=request.user)
@@ -112,6 +111,19 @@ def comment_view(request, pk):
         form = CommentForm()
 
     return render(request, f"nightstand_dashboard/add_comment.html", {"form": form, "chapter": chapter})
+
+def complete_chapter(request, pk):
+    ReaderChapter.objects.filter(pk=pk).update(completed=True)
+    return HttpResponse("OK")
+
+def duedate(request, pk):
+    chapter = ReaderChapter.objects.filter(pk=pk)
+    if request.method == "POST":
+        newdate = json.loads(request.body.decode("utf-8"))["newdate"]
+        chapter.update(duedate=newdate)
+    return HttpResponse("OK")
+
+
 
 
 

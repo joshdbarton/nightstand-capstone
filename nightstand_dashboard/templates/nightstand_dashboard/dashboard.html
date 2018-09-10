@@ -18,21 +18,26 @@
         <h6>{{comment.chapter.book}}</h6>
         <p>{{comment.content}}</p>
         {% if reader in comment.likes.all %}
-        <input class="like-button" id="comment-{{comment.id}}" type="button" value="unlike"/>
+        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Unlike"/>
         {% else %}
-        <input class="like-button" id="comment-{{comment.id}}" type="button" value="like"/>
+        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Like"/>
         {% endif %}
-        <p>Likes: {{comment.likes.count}}</p>
+        <p>Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p> 
+        
     </div>
     {% endfor %}
 </div>
 <div id="dashboard-to-do">
     <h3>What should I read today?</h3>
     {% for chapter in to_do %}
-    <div class="chapter-card">
+    {% if chapter.is_late %}
+    <div class="chapter-card overdue" id="chapter-card-{{chapter.id}}">
+    {% else %}
+    <div class="chapter-card" id="chapter-card-{{chapter.id}}">
+    {% endif%}
         <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
-        <p>{{chapter.duedate}}</p>
-        <input id="reader-chapter-{{chapter.id}}" type="button" value="Completed!"/>
+        <p> Due: {{chapter.duedate}}</p>
+        <input class="chapter-complete" id="chapter-{{chapter.id}}-dashboard" type="button" value="complete"/>
     </div>
     {% endfor %}
 </div>
