@@ -1,6 +1,13 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
+<div id="search-form">
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button value="submit">Search</button>
+    </form>
+</div>
 {% for book in books %}
 <div class="book-card">
     <img src='{{book.thumbnail}}' alt="{{book.title}}" width="50">

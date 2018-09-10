@@ -1,4 +1,5 @@
 import json
+import requests
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -6,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponse, HttpResponseForbidden
 from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment
-from nightstand_dashboard.forms import CommentForm
+from nightstand_dashboard.forms import CommentForm, SearchForm
 
 
 
@@ -59,8 +60,20 @@ def dashboard(request):
 
 
 def add_book(request):
-    books = Book.objects.all()
-    return render(request, 'nightstand_dashboard/add_book.html', {'books': books })
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        param = {form.data['search_field']: form.data['search_term'].replace(" ", "+")}
+        r = requests.get('http://openlibrary.org/search.json', params=param)
+        results = json.loads(r.text)
+        for doc in results["docs"]:
+            if "author_name" in doc.keys():
+                print(doc["author_name"][0])
+            else:
+                print("None")
+        return HttpResponse("OK")
+    else:
+        form = SearchForm()
+        return render(request, 'nightstand_dashboard/add_book.html', {"form": form })
 
 def book_view(request, pk):
     reader = Reader.objects.get(user=request.user)
