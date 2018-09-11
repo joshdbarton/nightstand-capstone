@@ -41,7 +41,6 @@ def dashboard(request):
         context['books'][book.id] = [book.title, book.thumbnail]
         progress = 0
         chapters = Chapter.objects.filter(book=book)
-        book_chapters = list()
         chapter_count = 0
         completed_count = 0
         for chapter in chapters:
@@ -81,7 +80,6 @@ def add_book(request):
                 if len(results):
                     if "table_of_contents" in results[f"OLID:{key}"]["details"].keys() and "thumbnail_url" in results[f"OLID:{key}"] :
                         books.append({"title": results[f"OLID:{key}"]["details"]["title"], "OLID": key, "thumbnail": results[f"OLID:{key}"]["thumbnail_url"]})
-        print(books)
         return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": books})
     else:
         form = SearchForm()
