@@ -62,11 +62,27 @@ def dashboard(request):
 def add_book(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
+        books = list()
         param = {form.data['search_field']: form.data['search_term'].replace(" ", "+")}
-        r = requests.get('http://openlibrary.org/search.json', params=param)
+        r = requests.get('https://openlibrary.org/search.json', params=param)
         results = json.loads(r.text)
-        display_results = [{"title": result["title"], "author": result["author_name"][0], "thumbnail": f'http://covers.openlibrary.org/b/id/{result["cover_i"]}-S.jpg'} for result in results["docs"] if "title" in result.keys() and "author_name" in result.keys() and "cover_i" in result.keys()]
-        return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": display_results})
+        for doc in results["docs"]:
+            if "edition_key" in doc.keys():
+                for key in doc["edition_key"]:
+                    r = requests.get(f'https://openlibrary.org/api/books?bibkeys=OLID:{key}&jscmd=details&format=json')
+                    results = json.loads(r.text)
+                    if len(results):
+                        if "table_of_contents" in results[f"OLID:{key}"]["details"].keys() and "thumbnail_url" in results[f"OLID:{key}"]:
+                            books.append({"title": results[f"OLID:{key}"]["details"]["title"], "OLID": key, "thumbnail": results[f"OLID:{key}"]["thumbnail_url"]})
+            elif "key" in doc.keys():
+                r = requests.get(f'https://openlibrary.org/api/books?bibkeys=OLID:{doc["key"]}&jscmd=details&format=json')
+                results = json.loads(r.text)
+                print(results)
+                if len(results):
+                    if "table_of_contents" in results[f"OLID:{key}"]["details"].keys() and "thumbnail_url" in results[f"OLID:{key}"] :
+                        books.append({"title": results[f"OLID:{key}"]["details"]["title"], "OLID": key, "thumbnail": results[f"OLID:{key}"]["thumbnail_url"]})
+        print(books)
+        return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": books})
     else:
         form = SearchForm()
         return render(request, 'nightstand_dashboard/add_book.html', {"form": form })
@@ -86,13 +102,19 @@ def book_view(request, pk):
     else:
         return HttpResponseForbidden()
 
-def book_add(request, pk):
-    reader = Reader.objects.get(user=request.user)
-    book = Book.objects.get(pk=pk)
-    book.readers.add(reader)
-    for chapter in book.chapter_set.all():
-        ReaderChapter.objects.create(chapter=chapter, reader=reader)
-    return redirect(f"/books/{pk}")
+def book_add(request, olid):
+    book = Book.objects.get(OLID=olid)
+    if book:
+        book.readers.add(reader)
+        for chapter in book.chapter_set.all():
+            ReaderChapter.objects.create(chapter=chapter, reader=reader)
+    else:
+        r = requests.get(f'https://openlibrary.org/api/books&bibkeys=OLID:{olid}&format=json')
+        results = json.loads(r.text)
+        print(r.text)
+
+    return redirect(f"/books/{book.id}")
+
 
 
 def like(request, pk):
