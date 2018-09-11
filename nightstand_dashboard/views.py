@@ -74,10 +74,10 @@ def add_book(request):
                     if len(results):
                         if "table_of_contents" in results[f"OLID:{key}"]["details"].keys() and "thumbnail_url" in results[f"OLID:{key}"]:
                             books.append({"title": results[f"OLID:{key}"]["details"]["title"], "OLID": key, "thumbnail": results[f"OLID:{key}"]["thumbnail_url"]})
+                        # break
             elif "key" in doc.keys():
                 r = requests.get(f'https://openlibrary.org/api/books?bibkeys=OLID:{doc["key"]}&jscmd=details&format=json')
                 results = json.loads(r.text)
-                print(results)
                 if len(results):
                     if "table_of_contents" in results[f"OLID:{key}"]["details"].keys() and "thumbnail_url" in results[f"OLID:{key}"] :
                         books.append({"title": results[f"OLID:{key}"]["details"]["title"], "OLID": key, "thumbnail": results[f"OLID:{key}"]["thumbnail_url"]})
@@ -103,17 +103,21 @@ def book_view(request, pk):
         return HttpResponseForbidden()
 
 def book_add(request, olid):
-    book = Book.objects.get(OLID=olid)
-    if book:
+    reader = Reader.objects.get(user=request.user)
+    book = Book.objects.filter(OLID=olid)
+    if len(book):
+        book = Book.objects.get(OLID=olid)
         book.readers.add(reader)
         for chapter in book.chapter_set.all():
             ReaderChapter.objects.create(chapter=chapter, reader=reader)
     else:
-        r = requests.get(f'https://openlibrary.org/api/books&bibkeys=OLID:{olid}&format=json')
+        r = requests.get(f'http://openlibrary.org/api/books?bibkeys=OLID:{olid}&format=json&jscmd=details')
         results = json.loads(r.text)
-        print(r.text)
+        chapters = results[f"OLID:{olid}"]["details"]["table_of_contents"]
+        for chapter in chapters:
+            print(chapter["title"].replace("-", ""))
 
-    return redirect(f"/books/{book.id}")
+    return HttpResponse("OK")
 
 
 
