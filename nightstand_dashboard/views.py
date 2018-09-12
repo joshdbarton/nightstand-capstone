@@ -62,24 +62,10 @@ def add_book(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
         books = list()
-        param = {form.data['search_field']: form.data['search_term'].replace(" ", "+")}
-        r = requests.get('https://openlibrary.org/search.json', params=param)
+        param = {"q": form.data['search_term'].replace(" ", "+")}
+        r = requests.get('http://localhost:3000/books', params=param)
         results = json.loads(r.text)
-        for doc in results["docs"]:
-            if "edition_key" in doc.keys():
-                for key in doc["edition_key"]:
-                    r = requests.get(f'https://openlibrary.org/api/books?bibkeys=OLID:{key}&jscmd=details&format=json')
-                    results = json.loads(r.text)
-                    if len(results):
-                        if "table_of_contents" in results[f"OLID:{key}"]["details"].keys() and "thumbnail_url" in results[f"OLID:{key}"]:
-                            books.append({"title": results[f"OLID:{key}"]["details"]["title"], "OLID": key, "thumbnail": results[f"OLID:{key}"]["thumbnail_url"]})
-                        # break
-            elif "key" in doc.keys():
-                r = requests.get(f'https://openlibrary.org/api/books?bibkeys=OLID:{doc["key"]}&jscmd=details&format=json')
-                results = json.loads(r.text)
-                if len(results):
-                    if "table_of_contents" in results[f"OLID:{key}"]["details"].keys() and "thumbnail_url" in results[f"OLID:{key}"] :
-                        books.append({"title": results[f"OLID:{key}"]["details"]["title"], "OLID": key, "thumbnail": results[f"OLID:{key}"]["thumbnail_url"]})
+        print(results)
         return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": books})
     else:
         form = SearchForm()
@@ -109,7 +95,7 @@ def book_add(request, olid):
         for chapter in book.chapter_set.all():
             ReaderChapter.objects.create(chapter=chapter, reader=reader)
     else:
-        r = requests.get(f'http://openlibrary.org/api/books?bibkeys=OLID:{olid}&format=json&jscmd=details')
+        r = requests.get(f'http://openlibrary.org/api/books?bibkeys=OLID:{olid}&format=json&jscmd=data')
         results = json.loads(r.text)
         chapters = results[f"OLID:{olid}"]["details"]["table_of_contents"]
         for chapter in chapters:

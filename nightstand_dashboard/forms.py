@@ -10,11 +10,7 @@ class CommentForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
 
-
-    search_field = forms.ChoiceField(label="Search by:", choices=(
-        ("author", "Author"),
-        ("title", "Title"),  
-    ))
+  
     search_term = forms.CharField(max_length=100)
 
 
