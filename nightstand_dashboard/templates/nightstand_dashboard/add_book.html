@@ -1,12 +1,19 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
+<div id="search-form">
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button value="submit">Search</button>
+    </form>
+</div>
 {% for book in books %}
 <div class="book-card">
-    <img src='{{book.thumbnail}}' alt="{{book.title}}" width="50">
+    <img src='http://covers.openlibrary.org/b/olid/{{book.olid}}-M.jpg' alt="{{book.title}}" width="150">
     <p>{{book.title}}</p>
     <p>{{book.author}}</p>
-    <a href="/book_add/{{book.id}}"><input type="button" value="+"/></a>
+    <a href="/book_add/{{book.olid}}"><input type="button" value="+"/></a>
 </div>
 {% endfor %}
 {% endblock %}
