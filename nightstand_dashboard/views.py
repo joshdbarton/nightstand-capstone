@@ -103,7 +103,7 @@ def book_add(request, olid):
         results = json.loads(r.text)
         book = results[0]
         chapters = book["chapters"]
-        new_book = Book.objects.create(title=book["title"], OLID=book["olid"], author=book["author"], thumbnail=f"http://covers.openlibrary.org/b/olid/{book['olid']}-S.jpg", pages=book["pages"])
+        new_book = Book.objects.create(title=book["title"], OLID=book["olid"], author=book["author"], thumbnail=f"http://covers.openlibrary.org/b/olid/{book['olid']}-M.jpg", pages=book["pages"])
         new_book.readers.add(reader)
         for chapter in chapters:
            new_chapter = Chapter.objects.create(book=new_book, name=chapter["title"].replace("--", ""))
