@@ -103,7 +103,7 @@ def book_add(request, olid):
         new_book.readers.add(reader)
         for chapter in chapters:
            new_chapter = Chapter.objects.create(book=new_book, name=chapter["title"].replace("--", ""))
-           new_chapter.readers.add(reader)
+           ReaderChapter.objects.create(chapter=new_chapter, reader=reader)
         return redirect(f"/books/{new_book.id}")
 
 
