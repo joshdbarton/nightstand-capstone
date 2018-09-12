@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponse, HttpResponseForbidden
+from django.contrib.auth.decorators import login_required
 from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment
 from nightstand_dashboard.forms import CommentForm, SearchForm
 
@@ -32,6 +33,7 @@ def register(request):
 
     return render(request, 'nightstand_dashboard/registration.html', {'form': f})
 
+@login_required()
 def dashboard(request):
     reader = Reader.objects.get(user=request.user)
     books = reader.books.all()
@@ -57,7 +59,7 @@ def dashboard(request):
     context["to_do"] = ReaderChapter.objects.filter(reader=reader, completed=False).order_by('duedate')[:5]
     return render(request, "nightstand_dashboard/dashboard.html", context)
 
-
+@login_required()
 def add_book(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
@@ -70,6 +72,7 @@ def add_book(request):
         form = SearchForm()
         return render(request, 'nightstand_dashboard/add_book.html', {"form": form })
 
+@login_required()
 def book_view(request, pk):
     reader = Reader.objects.get(user=request.user)
     book = Book.objects.get(pk=pk)
@@ -85,6 +88,7 @@ def book_view(request, pk):
     else:
         return HttpResponseForbidden()
 
+@login_required()
 def book_add(request, olid):
     reader = Reader.objects.get(user=request.user)
     book = Book.objects.filter(OLID=olid)
@@ -106,7 +110,7 @@ def book_add(request, olid):
            ReaderChapter.objects.create(chapter=new_chapter, reader=reader)
         return redirect(f"/books/{new_book.id}")
 
-
+@login_required()
 def like(request, pk):
     comment = ChapterComment.objects.get(pk=pk)
     reader = Reader.objects.get(user=request.user)
@@ -116,7 +120,7 @@ def like(request, pk):
         comment.likes.add(reader)
     return HttpResponse("OK")
     
-
+@login_required()
 def comment_view(request, pk):
     reader = Reader.objects.get(user=request.user)
     chapter = Chapter.objects.get(pk=pk)
@@ -133,10 +137,12 @@ def comment_view(request, pk):
 
     return render(request, f"nightstand_dashboard/add_comment.html", {"form": form, "chapter": chapter})
 
+@login_required()
 def complete_chapter(request, pk):
     ReaderChapter.objects.filter(pk=pk).update(completed=True)
     return HttpResponse("OK")
 
+@login_required()
 def duedate(request, pk):
     chapter = ReaderChapter.objects.filter(pk=pk)
     if request.method == "POST":
