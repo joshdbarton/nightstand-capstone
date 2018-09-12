@@ -15,7 +15,7 @@ def index(request):
     if request.user.is_authenticated:
         return redirect('/dashboard')
     else:
-        return redirect('/accounts/login')
+        return redirect('/login')
 
 def register(request):
     if request.method == 'POST':
@@ -65,8 +65,7 @@ def add_book(request):
         param = {"q": form.data['search_term'].replace(" ", "+")}
         r = requests.get('http://localhost:3000/books', params=param)
         results = json.loads(r.text)
-        print(results)
-        return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": books})
+        return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": results})
     else:
         form = SearchForm()
         return render(request, 'nightstand_dashboard/add_book.html', {"form": form })
@@ -94,15 +93,18 @@ def book_add(request, olid):
         book.readers.add(reader)
         for chapter in book.chapter_set.all():
             ReaderChapter.objects.create(chapter=chapter, reader=reader)
+        return redirect(f"/books/{book.id}")
     else:
-        r = requests.get(f'http://openlibrary.org/api/books?bibkeys=OLID:{olid}&format=json&jscmd=data')
+        r = requests.get(f'http://localhost:3000/books?olid={olid}')
         results = json.loads(r.text)
-        chapters = results[f"OLID:{olid}"]["details"]["table_of_contents"]
+        book = results[0]
+        chapters = book["chapters"]
+        new_book = Book.objects.create(title=book["title"], OLID=book["olid"], author=book["author"], thumbnail=f"http://covers.openlibrary.org/b/olid/{book['olid']}-S.jpg", pages=book["pages"])
+        new_book.readers.add(reader)
         for chapter in chapters:
-            print(chapter["title"].replace("-", ""))
-
-    return HttpResponse("OK")
-
+           new_chapter = Chapter.objects.create(book=new_book, name=chapter["title"].replace("--", ""))
+           new_chapter.readers.add(reader)
+        return redirect(f"/books/{new_book.id}")
 
 
 def like(request, pk):

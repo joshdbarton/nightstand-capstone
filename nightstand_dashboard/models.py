@@ -35,7 +35,7 @@ class Book(models.Model):
 
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
-    OLID = models.BigIntegerField()
+    OLID = models.CharField(max_length=100)
     pages = models.IntegerField()
     thumbnail = models.CharField(max_length=1023)
     readers = models.ManyToManyField(Reader, blank=True,  related_name="books")
