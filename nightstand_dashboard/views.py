@@ -197,8 +197,8 @@ def group_add(request, pk):
     group = Group.objects.get(pk=pk)
     group.readers.add(reader)
     if group.book not in reader.books.all():
-        group.books.readers.add(reader)
-        for chapter in group.book.chapters:
+        group.book.readers.add(reader)
+        for chapter in group.book.chapter_set.all():
             duedate = chapter.group.chapter.duedate
             ReaderChapter.objects.create(chapter=chapter, reader=reader, duedate=duedate)
     return redirect(f"/groups/{pk}")
