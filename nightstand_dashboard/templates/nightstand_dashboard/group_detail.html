@@ -1,7 +1,7 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-{% if reader not in group.readers %}
+{% if reader not in group.readers.all %}
 <a href="/group_add/{{group.id}}"><input type="button" value="Join Group"/></a>
 {% endif %}
 <div class="group-detail-card">
