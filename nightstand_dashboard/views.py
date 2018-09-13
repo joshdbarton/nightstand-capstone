@@ -186,7 +186,7 @@ def group_detail(request, pk):
     for reader in readers:
         chapters = list()
         for chapter in group.book.chapter_set.all():
-            chapters.append(ReaderChapter.objects.get(chapter=chapter))
+            chapters.append(ReaderChapter.objects.get(chapter=chapter, reader=reader))
         context["readers"][reader.id] = chapters
     return render(request, "nightstand_dashboard/group_detail.html", context)
 
@@ -199,7 +199,7 @@ def group_add(request, pk):
     if group.book not in reader.books.all():
         group.book.readers.add(reader)
         for chapter in group.book.chapter_set.all():
-            duedate = chapter.group.chapter.duedate
+            duedate = GroupChapter.objects.get(chapter=chapter, group=group).duedate
             ReaderChapter.objects.create(chapter=chapter, reader=reader, duedate=duedate)
     return redirect(f"/groups/{pk}")
 
