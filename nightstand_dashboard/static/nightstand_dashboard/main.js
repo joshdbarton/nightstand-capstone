@@ -46,8 +46,9 @@ $(".chapter-complete").click(event => {
 $(".duedate-update").click(event => {
     const currentDate = new Date()
     const chapt = event.target.id.split("-")[1]
-    const newdate = $(`#chapterDueDateField-${chapt}`).val()
-    $.ajax(`http://127.0.0.1:8000/duedate/${chapt}`, 
+    if (event.target.id.split("-")[0] === "groupDueDateField") {
+        const newdate = $(`#groupDueDateField-${chapt}`).val()
+        $.ajax(`http://127.0.0.1:8000/duedate/${chapt}?type=group`, 
     {
         "method": "POST", 
         "data": JSON.stringify({"newdate": newdate}),
@@ -57,13 +58,26 @@ $(".duedate-update").click(event => {
             "Accept": "application/json",
             "Content-Type": "application/json",
     }})
-    if (currentDate > newdate) {
-        if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
-            $(`#chapter-card-${chapt}`).addClass("overdue")
+    } else {
+        const newdate = $(`#chapterDueDateField-${chapt}`).val()
+        $.ajax(`http://127.0.0.1:8000/duedate/${chapt}?type=reader`, 
+        {
+            "method": "POST", 
+            "data": JSON.stringify({"newdate": newdate}),
+            "credentials": "include",
+            "headers": {
+                "X-CSRFToken": document.cookie.split("=")[1],
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+        }})
+        if (currentDate > newdate) {
+            if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
+                $(`#chapter-card-${chapt}`).addClass("overdue")
+            }
+        } else if (currentDate < newdate) {
+            if ($(`#chapter-card-${chapt}`).hasClass("overdue")) {
+                $(`#chapter-card-${chapt}`).removeClass("overdue")
+            }
         }
-    } else if (currentDate < newdate) {
-        if ($(`#chapter-card-${chapt}`).hasClass("overdue")) {
-            $(`#chapter-card-${chapt}`).removeClass("overdue")
-        }
-    }
+    }   
 })

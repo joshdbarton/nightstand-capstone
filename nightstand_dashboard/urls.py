@@ -15,4 +15,8 @@ urlpatterns = [
     path("like/<int:pk>", views.like, name="like"),
     path("complete/<int:pk>", views.complete_chapter, name="complete"),
     path("duedate/<int:pk>", views.duedate, name="duedate"),
+    path("group_search/<slug:olid>", views.groups_view, name="groups"), 
+    path("groups/<int:pk>", views.group_detail, name="group_detail"), 
+    path("create_group/<slug:olid>", views.create_group, name="create_group"), 
+    path("group_add/<int:pk>", views.group_add, name="group_add"),
 ]
