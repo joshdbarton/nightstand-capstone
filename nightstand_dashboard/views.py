@@ -91,8 +91,7 @@ def book_view(request, pk):
 @login_required()
 def book_add(request, olid):
     reader = Reader.objects.get(user=request.user)
-    book = Book.objects.filter(OLID=olid)
-    if len(book):
+    if Book.objects.filter(OLID=olid).count():
         book = Book.objects.get(OLID=olid)
         book.readers.add(reader)
         for chapter in book.chapter_set.all():
@@ -160,8 +159,7 @@ def duedate(request, pk):
 @login_required()
 def groups_view(request, olid):
     no_groups_message = "There are no groups for this book, but you can start your own!"
-    book_search = Book.objects.filter(OLID=olid)
-    if len(book_search):
+    if Book.objects.filter(OLID=olid).count():
         book = Book.objects.get(OLID=olid)
         groups = Group.objects.filter(book=book)
         if len(groups):
@@ -221,8 +219,7 @@ def create_group(request, olid):
             return redirect(f"/groups/{group.id}")
     else:
         book = None
-        book_search = Book.objects.filter(OLID=olid)
-        if len(book_search):
+        if Book.objects.filter(OLID=olid).count():
             book = Book.objects.get(OLID=olid)
         else:
             r = requests.get(f'http://localhost:3000/books?olid={olid}')
