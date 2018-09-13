@@ -1,0 +1,28 @@
+{% extends 'nightstand_dashboard/base.html' %}
+
+{% block content %}
+{% if reader not in group.readers %}
+<a href="/group_add/{{group.id}}"><input type="button" value="Join Group"/></a>
+{% endif %}
+<div class="group-detail-card">
+    <img src="{{group.book.thumbnail}}" alt="{{book.title}} cover" width="150"/>
+    <h2>{{group}}</h2>
+    <h3>{{group.book}}</h3>
+</div>
+<div id="group-comments">
+    <h3>Comments</h3>
+    {% for comment in comments %}
+    <div class="comment-card">
+        <h5>{{comment}}</h5>
+        <h6>Chapter: {{comment.chapter}}</h6>
+        <p>{{comment.content}}</p>
+        {% if reader in comment.likes.all %}
+        <input id="comment-{{comment.id}}" class="like-button" type="button" value="Unlike"/>
+        {% else %}
+        <input id="comment-{{comment.id}}" class="like-button" type="button" value="Like"/>
+        {% endif %}
+        <p >Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
