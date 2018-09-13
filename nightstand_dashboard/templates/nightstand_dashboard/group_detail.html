@@ -9,6 +9,16 @@
     <h2>{{group}}</h2>
     <h3>{{group.book}}</h3>
 </div>
+<div class="group-chapters">
+    {% for chapter in group.groupchapter_set.all %}
+    <div class="group-chapter-card" id="chapter-card-{{chapter.id}}">
+        <p>Chapter: {{chapter.chapter}}</p>
+        <input id="groupDueDateField-{{chapter.id}}" type="date" value="{{chapter.duedate|date:'Y-m-d'}}"/>
+        <input class="duedate-update" id="groupDueDate-{{chapter.id}}" type="button" value="update"/>
+        <a href="/comment/{{chapter.chapter.id}}"><input type="button" value="add comment" /></a>
+    </div>
+    {% endfor %}
+</div>
 <div id="group-comments">
     <h3>Comments</h3>
     {% for comment in comments %}

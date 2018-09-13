@@ -46,7 +46,7 @@ $(".chapter-complete").click(event => {
 $(".duedate-update").click(event => {
     const currentDate = new Date()
     const chapt = event.target.id.split("-")[1]
-    if (event.target.id.split("-")[0] === "groupDueDateField") {
+    if (event.target.id.split("-")[0] === "groupDueDate") {
         const newdate = $(`#groupDueDateField-${chapt}`).val()
         $.ajax(`http://127.0.0.1:8000/duedate/${chapt}?type=group`, 
     {
