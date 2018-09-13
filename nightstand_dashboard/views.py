@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout, login, authenticate
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
-from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment, Group
+from nightstand_dashboard.models import Book, Reader, Chapter, ReaderChapter, ChapterComment, Group, GroupChapter
 from nightstand_dashboard.forms import CommentForm, SearchForm, CreateGroupForm
 
 
@@ -166,6 +166,8 @@ def groups_view(request, olid):
         groups = Group.objects.filter(book=book)
         if len(groups):
             return render(request, "nightstand_dashboard/groups.html", {"groups": groups, "olid": olid})
+        else:
+            return render(request, "nightstand_dashboard/groups.html", {"message": no_groups_message, "olid": olid})
     else:
         return render(request, "nightstand_dashboard/groups.html", {"message": no_groups_message, "olid": olid})
 
@@ -204,12 +206,15 @@ def create_group(request, olid):
     reader = Reader.objects.get(user=request.user)
     if request.method == "POST":
         book = Book.objects.get(OLID=olid)
-        form = CreateGroupForm(data=request.data)
+        form = CreateGroupForm(request.POST)
         if form.is_valid():
-            group = Group.objects.create(name=form.group_name, book=book)
+            group = Group.objects.create(name=form['group_name'], book=book)
             group.readers.add(reader)
             for chapter in book.chapter_set.all():
                 GroupChapter.objects.create(chapter=chapter, group=group)
+            book.readers.add(reader)
+            for chapter in book.chapter_set.all():
+                ReaderChapter.objects.create(reader=reader, chapter=new_chapter)
             return redirect(f"/groups/{group.id}")
     else:
         book = None
@@ -222,11 +227,10 @@ def create_group(request, olid):
             book = results[0]
             chapters = book["chapters"]
             book = Book.objects.create(title=book["title"], OLID=book["olid"], author=book["author"], thumbnail=f"http://covers.openlibrary.org/b/olid/{book['olid']}-M.jpg", pages=book["pages"])
-            book.readers.add(reader)
             for chapter in chapters:
-                new_chapter = Chapter.objects.create(book=book, name=chapter["title"].replace("--", ""))
+                Chapter.objects.create(book=book, name=chapter["title"].replace("--", ""))   
         form = CreateGroupForm()
-        return render("nightstand_dashboard/create_group.html", {"form": form, "book": book})
+        return render(request, "nightstand_dashboard/create_group.html", {"form": form, "book": book})
 
 
 
