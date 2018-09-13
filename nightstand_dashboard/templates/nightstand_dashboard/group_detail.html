@@ -15,7 +15,7 @@
         <p>Chapter: {{chapter.chapter}}</p>
         <input id="groupDueDateField-{{chapter.id}}" type="date" value="{{chapter.duedate|date:'Y-m-d'}}"/>
         <input class="duedate-update" id="groupDueDate-{{chapter.id}}" type="button" value="update"/>
-        <a href="/comment/{{chapter.chapter.id}}"><input type="button" value="add comment" /></a>
+        <a href="/comment/{{chapter.chapter.id}}?next=group&id={{group.id}}"><input type="button" value="add comment" /></a>
     </div>
     {% endfor %}
 </div>

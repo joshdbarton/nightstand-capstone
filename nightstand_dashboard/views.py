@@ -130,7 +130,10 @@ def comment_view(request, pk):
             new_comment.reader = reader
             new_comment.chapter = chapter
             new_comment.save()
-            return redirect(f'/books/{chapter.book.id}')
+            if request.GET.get("next") == "book":
+                return redirect(f'/books/{chapter.book.id}')
+            elif request.GET.get("next") == "group":
+                return redirect(f'/groups/{request.GET.get("id")}')
     else:
         form = CommentForm()
 
