@@ -179,7 +179,7 @@ def group_detail(request, pk):
     readers = group.readers.all()
     context = {"reader": reader, "group": group, "readers": dict()}
     comments = list()
-    for chapter in group.book.chapters.all():
+    for chapter in group.book.chapter_set.all():
         comments_set = chapter.chaptercomment_set.all()
         comments += [comment for comment in comments_set if comment.reader in readers]
     context["comments"] = sorted(comments, reverse=True, key= lambda k: k.datetime)
@@ -212,9 +212,10 @@ def create_group(request, olid):
             group.readers.add(reader)
             for chapter in book.chapter_set.all():
                 GroupChapter.objects.create(chapter=chapter, group=group)
-            book.readers.add(reader)
-            for chapter in book.chapter_set.all():
-                ReaderChapter.objects.create(reader=reader, chapter=new_chapter)
+            if reader not in book.readers.all():
+                book.readers.add(reader)
+                for chapter in book.chapter_set.all():
+                    ReaderChapter.objects.create(reader=reader, chapter=chapter)
             return redirect(f"/groups/{group.id}")
     else:
         book = None
