@@ -184,7 +184,9 @@ def group_detail(request, pk):
         comments += [comment for comment in comments_set if comment.reader in readers]
     context["comments"] = sorted(comments, reverse=True, key= lambda k: k.datetime)
     for reader in readers:
-        chapters = ReaderChapter.objects.filter(book=group.book)
+        chapters = list()
+        for chapter in group.book.chapter_set.all():
+            chapters.append(ReaderChapter.objects.get(chapter=chapter))
         context["readers"][reader.id] = chapters
     return render(request, "nightstand_dashboard/group_detail.html", context)
 
