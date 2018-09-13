@@ -208,7 +208,7 @@ def create_group(request, olid):
         book = Book.objects.get(OLID=olid)
         form = CreateGroupForm(request.POST)
         if form.is_valid():
-            group = Group.objects.create(name=form['group_name'], book=book)
+            group = Group.objects.create(name=form['group_name'].value(), book=book)
             group.readers.add(reader)
             for chapter in book.chapter_set.all():
                 GroupChapter.objects.create(chapter=chapter, group=group)
