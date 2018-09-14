@@ -1,3 +1,6 @@
+/**************************
+Group Progress Box
+**************************/
 .reader-square-completed {
     background-color: green;
 }
@@ -5,3 +8,43 @@
 .reader-square {
     background-color: bisque;
 }
+
+.reader-square-overdue {
+    background-color: red;
+}
+
+.reader-header {
+    margin: 0 2px 0 2px;
+}
+ 
+#readers-progress {
+   display: flex;
+   flex-direction: row;
+}
+
+#group-progress {
+    display: flex;
+}
+
+.group-chapter-card,
+.reader-div, {
+    display: inline;
+    border: solid 2px black;
+}
+
+.reader-div {
+    width: 100px;
+    text-align: center
+}
+
+.group-chapter-card, 
+.square {
+    margin: 2px;
+}
+
+.square {
+    height: 70px;
+}
+
+
+

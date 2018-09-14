@@ -1,5 +1,6 @@
 import json
 import requests
+import datetime 
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -187,8 +188,14 @@ def group_detail(request, pk):
     for reader in readers:
         chapters = list()
         for chapter in group.book.chapter_set.all():
+            group_chapter = GroupChapter.objects.get(chapter=chapter)
             reader_chapter = ReaderChapter.objects.get(chapter=chapter, reader=reader)
-            chapters.append(reader_chapter.completed)
+            if reader_chapter.completed:
+                chapters.append("-completed")
+            elif group_chapter.duedate and group_chapter.duedate < datetime.date.today():
+                chapters.append("-overdue")
+            else:
+                chapters.append("")
         context["readers"][str(reader)] = chapters
     return render(request, "nightstand_dashboard/group_detail.html", context)
 
