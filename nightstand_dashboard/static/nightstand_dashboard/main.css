@@ -50,14 +50,15 @@ Group Progress Box
 }
 
 /**************************
-Dashboard
+Dashboard Book Card
 **************************/
 .dashboard-book-card {
-    background-color: whitesmoke;
     width: 154px;
     margin-left: 10px;
+    margin-bottom: 10px;
     color: black;
-    border: solid 2px black;
+    border: solid 2px darkgray;
+    border-radius: 3px;
     
 }
 
@@ -92,5 +93,25 @@ Dashboard
 }
 
 .progress-div {
-    background-color: white;
+    background-color: whitesmoke;
 }
+
+/**************************
+Chapter Card
+**************************/
+
+/**************************
+Comment Card
+**************************/
+
+/**************************
+Dashboard Layout
+**************************/
+
+/**************************
+Book Detail Layout
+**************************/
+
+/**************************
+Group Detail Layout
+**************************/
