@@ -35,4 +35,17 @@
     </div>
     {% endfor %}
 </div>
+<div id="readers-progress">
+    {% for reader, values in readers.items %}
+        <div class="reader-div", id={{reader}}>
+            {% for value in values %}
+                {% if value %}
+                    <div class="reader-square-completed">Completed</div>
+                {% else %}
+                    <div class="reader-square">not Completed</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

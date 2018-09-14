@@ -187,8 +187,9 @@ def group_detail(request, pk):
     for reader in readers:
         chapters = list()
         for chapter in group.book.chapter_set.all():
-            chapters.append(ReaderChapter.objects.get(chapter=chapter, reader=reader))
-        context["readers"][reader.id] = chapters
+            reader_chapter = ReaderChapter.objects.get(chapter=chapter, reader=reader)
+            chapters.append(reader_chapter.completed)
+        context["readers"][str(reader)] = chapters
     return render(request, "nightstand_dashboard/group_detail.html", context)
 
 
