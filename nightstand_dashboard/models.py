@@ -108,3 +108,13 @@ class ReaderChapter(models.Model):
             return self.duedate < datetime.date.today()
         else:
             return False
+
+class GroupChapter(models.Model):
+    """Represents the due dates for a reading group's chapters"""
+
+    group = models.ForeignKey("Group", on_delete=models.CASCADE)
+    chapter = models.ForeignKey('Chapter', on_delete=models.CASCADE)
+    duedate = models.DateField(null=True)
+
+    def __str__(self):
+        return f'{self.group}: {self.chapter}'
