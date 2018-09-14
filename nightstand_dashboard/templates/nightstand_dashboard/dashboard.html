@@ -1,14 +1,17 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-{% for id, values in books.items %}
-<div class="dashboard-book-card">
-    <img src="{{values.1}}" alt="{{values.0}}" width="50"/>
-    <p><a href="/books/{{id}}">{{values.0}}</a></p>
-    <p>Progress: {{values.2}}</p>
-
+<div class="book-list">
+    {% for id, values in books.items %}
+    <a href="/books/{{id}}"><div class="dashboard-book-card">
+        <img src="{{values.1}}" alt="{{values.0}}" width="100"/>
+        <div class="progress-div">
+            <div class="progress-bar" style="height:15px;width:{{values.2}}%"></div>
+        </div>
+        <p>{{values.0}}</p>
+    </div></a>
+    {% endfor %}
 </div>
-{% endfor %}
 <div id="dashboard-comments">
     <h3>Recent Comments</h3>
     {% for comment in comments %}

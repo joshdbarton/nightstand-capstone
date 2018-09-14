@@ -16,6 +16,10 @@ Group Progress Box
 .reader-header {
     margin: 0 2px 0 2px;
 }
+
+.group-chapter-card {
+    background-color: lightgray;
+}
  
 #readers-progress {
    display: flex;
@@ -29,7 +33,6 @@ Group Progress Box
 .group-chapter-card,
 .reader-div, {
     display: inline;
-    border: solid 2px black;
 }
 
 .reader-div {
@@ -47,4 +50,17 @@ Group Progress Box
 }
 
 
+.dashboard-book-card {
+    width: 100px;
+}
 
+.progress-bar {
+    background-color: greenyellow;
+}
+
+.book-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}

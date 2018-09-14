@@ -1,6 +1,7 @@
 import json
 import requests
 import datetime 
+import math
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -53,7 +54,7 @@ def dashboard(request):
             if ReaderChapter.objects.get(reader=reader, chapter=chapter).completed:
                 completed_count += 1
             chapter_count += 1
-        progress = completed_count/chapter_count
+        progress = math.floor((completed_count/chapter_count)*100)
         context["books"][book.id].append(progress)
     context['comments'] = sorted(comments, reverse=True, key= lambda k: k.datetime)[:15]
     context["reader"] = reader
@@ -64,7 +65,6 @@ def dashboard(request):
 def add_book(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
-        books = list()
         param = {"q": form.data['search_term'].replace(" ", "+")}
         r = requests.get('http://localhost:3000/books', params=param)
         results = json.loads(r.text)

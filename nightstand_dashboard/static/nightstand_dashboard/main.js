@@ -1,6 +1,6 @@
 // event handler for likes
 $(".like-button").click(event => {
-    $.ajax(`http://127.0.0.1:8000/like/${event.target.id.split("-")[1]}`, {
+    $.ajax(`/like/${event.target.id.split("-")[1]}`, {
         "method": 'GET',
         "data": {},
         "credentials": "include",
@@ -24,7 +24,7 @@ $(".like-button").click(event => {
 
 // event handler for completing chapters
 $(".chapter-complete").click(event => {
-    $.ajax(`http://127.0.0.1:8000/complete/${event.target.id.split("-")[1]}`, {
+    $.ajax(`/complete/${event.target.id.split("-")[1]}`, {
         "method": 'GET',
         "data": {},
         "credentials": "include",
@@ -48,7 +48,7 @@ $(".duedate-update").click(event => {
     const chapt = event.target.id.split("-")[1]
     if (event.target.id.split("-")[0] === "groupDueDate") {
         const newdate = $(`#groupDueDateField-${chapt}`).val()
-        $.ajax(`http://127.0.0.1:8000/duedate/${chapt}?type=group`, 
+        $.ajax(`/duedate/${chapt}?type=group`, 
     {
         "method": "POST", 
         "data": JSON.stringify({"newdate": newdate}),
@@ -60,7 +60,7 @@ $(".duedate-update").click(event => {
     }})
     } else {
         const newdate = $(`#chapterDueDateField-${chapt}`).val()
-        $.ajax(`http://127.0.0.1:8000/duedate/${chapt}?type=reader`, 
+        $.ajax(`/duedate/${chapt}?type=reader`, 
         {
             "method": "POST", 
             "data": JSON.stringify({"newdate": newdate}),
