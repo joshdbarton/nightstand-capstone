@@ -49,9 +49,29 @@ Group Progress Box
     height: 70px;
 }
 
-
+/**************************
+Dashboard
+**************************/
 .dashboard-book-card {
-    width: 100px;
+    background-color: whitesmoke;
+    width: 154px;
+    margin-left: 10px;
+    color: black;
+    border: solid 2px black;
+    
+}
+
+.dashboard-book-card p {
+    margin-bottom: 0;
+}
+
+.book-list a {
+    text-decoration: none;
+}
+
+.dashboard-book-card:hover {
+    z-index: 100;
+    filter: blur(.05rem);
 }
 
 .progress-bar {
@@ -63,4 +83,14 @@ Group Progress Box
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.image-wrapper {
+    width: 150px;
+    height: 225px;
+}
+
+.progress-div {
+    background-color: white;
 }

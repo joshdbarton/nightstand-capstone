@@ -4,11 +4,12 @@
 <div class="book-list">
     {% for id, values in books.items %}
     <a href="/books/{{id}}"><div class="dashboard-book-card">
-        <img src="{{values.1}}" alt="{{values.0}}" width="100"/>
+        <div class="image-wrapper">
+            <img src="{{values.1}}" alt="{{values.0}}" width="150"/>
+        </div>
         <div class="progress-div">
             <div class="progress-bar" style="height:15px;width:{{values.2}}%"></div>
         </div>
-        <p>{{values.0}}</p>
     </div></a>
     {% endfor %}
 </div>
