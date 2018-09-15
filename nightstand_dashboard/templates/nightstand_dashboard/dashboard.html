@@ -17,10 +17,12 @@
     <h3>Recent Comments</h3>
     {% for comment in comments %}
     <div class="comment-card">
-        <h5>{{comment}}</h5>
-        <h6>{{comment.chapter}}</h6>
-        <h6>{{comment.chapter.book}}</h6>
-        <p>{{comment.content}}</p>
+        <div class="comment-header">
+            <span>{{comment.chapter.book}}:</span>
+            <span>{{comment.chapter}}</span>
+        </div>
+        <p class="comment-author">{{comment}}</p>
+        <p class="comment-content"><em>{{comment.content}}</em></p>
         {% if reader in comment.likes.all %}
         <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% else %}

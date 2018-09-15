@@ -107,6 +107,31 @@ Comment Card
 .like-button:hover {
     color: gray;
 }
+.comment-card {
+    border: 2px solid darkgray;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    width: 300px;
+}
+.comment-card span {
+    font-size: .65em;
+    padding: 2px;
+}
+.comment-card p {
+    margin-bottom: 0;
+    padding: 2px;
+}
+.comment-header {
+    background-color: darkgray;
+    color: white;
+}
+.comment-author {
+    border-bottom: solid 1px darkgray;
+}
+
+.comment-content {
+    overflow-wrap: break-word;
+}
 
 /**************************
 Dashboard Layout
