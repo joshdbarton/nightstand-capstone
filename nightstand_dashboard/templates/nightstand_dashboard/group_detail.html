@@ -11,7 +11,6 @@
 </div>
 <div id="group-progress">
         <div id="group-chapters">
-                <!-- <div class="reader-header">Group Progress</div> -->
                 {% for chapter in group.groupchapter_set.all %}
                 <div class="group-chapter-card" id="chapter-card-{{chapter.id}}">
                     <p>{{chapter.chapter}}</p>
@@ -24,7 +23,6 @@
         <div id="readers-progress">
                 {% for reader, values in readers.items %}
                     <div class="reader-div", id={{reader}}>
-                        <!-- <div class="reader-header">{{reader}}</div> -->
                         {% for value in values %}
                             <div class="square reader-square{{value}}"><p>{{reader}}</p></div>
                         {% endfor %}
@@ -34,18 +32,22 @@
 </div>
 
 <div id="group-comments">
-    <h3>Comments</h3>
+    <h3>Recent Comments</h3>
     {% for comment in comments %}
     <div class="comment-card">
-        <h5>{{comment}}</h5>
-        <h6>Chapter: {{comment.chapter}}</h6>
-        <p>{{comment.content}}</p>
+        <div class="comment-header">
+            <span>{{comment.chapter.book}}:</span>
+            <span>{{comment.chapter}}</span>
+        </div>
+        <p class="comment-author">{{comment}}</p>
+        <p class="comment-content"><em>{{comment.content}}</em></p>
         {% if reader in comment.likes.all %}
-        <input id="comment-{{comment.id}}" class="like-button" type="button" value="Unlike"/>
+        <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% else %}
-        <input id="comment-{{comment.id}}" class="like-button" type="button" value="Like"/>
+        <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% endif %}
-        <p >Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p>
+        <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
+        
     </div>
     {% endfor %}
 </div>

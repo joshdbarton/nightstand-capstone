@@ -42,8 +42,8 @@
     <div class="chapter-card" id="chapter-card-{{chapter.id}}">
     {% endif%}
         <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
-        <p> Due: {{chapter.duedate}}</p>
-        <input class="chapter-complete" id="chapter-{{chapter.id}}-dashboard" type="button" value="complete"/>
+        <span> Due Date: {{chapter.duedate}}</span>
+        <i id="chapter-{{chapter.id}}-dashboard" class="fas fa-clipboard-check chapter-complete"></i>
     </div>
     {% endfor %}
 </div>
