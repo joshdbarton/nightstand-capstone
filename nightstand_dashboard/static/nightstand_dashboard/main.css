@@ -55,8 +55,7 @@ Dashboard Book Card
 **************************/
 .dashboard-book-card {
     width: 154px;
-    margin-left: 10px;
-    margin-bottom: 10px;
+    margin: 0 auto 10px auto;
     color: black;
     border: solid 2px darkgray;
     border-radius: 3px;
@@ -80,14 +79,6 @@ Dashboard Book Card
     background-color: greenyellow;
 }
 
-.book-list {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin-top: 5px;
-}
-
 .image-wrapper {
     width: 150px;
     height: 225px;
@@ -103,12 +94,19 @@ Chapter Card
 .chapter-complete {
     font-size: 1.5em;
 }
+.chapter-complete:hover {
+    color: gray;
+}
 .chapter-card {
     background-color: whitesmoke;
     border: solid 2px darkgray;
     border-radius: 3px;
     margin-bottom: 5px;
     font: .75em; 
+}
+
+.overdue {
+    background-color: lightpink;
 }
 
 /**************************
@@ -121,7 +119,6 @@ Comment Card
     border: 2px solid darkgray;
     border-radius: 3px;
     margin-bottom: 5px;
-    width: 300px;
 }
 .comment-card span {
     font-size: .65em;
@@ -146,6 +143,21 @@ Comment Card
 /**************************
 Dashboard Layout
 **************************/
+/* .book-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 5px;
+} */
+.book-list {
+    max-height: 500px;
+    overflow: scroll;
+}
+#dashboard-comments {
+    max-height: 500px;
+    overflow: scroll;
+}
 
 /**************************
 Book Detail Layout

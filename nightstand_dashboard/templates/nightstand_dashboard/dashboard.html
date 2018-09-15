@@ -1,6 +1,20 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
+<div id="dashboard-to-do">
+    <h3>What should I read today?</h3>
+    {% for chapter in to_do %}
+    {% if chapter.is_late %}
+    <div class="chapter-card overdue" id="chapter-card-{{chapter.id}}">
+    {% else %}
+    <div class="chapter-card" id="chapter-card-{{chapter.id}}">
+    {% endif%}
+        <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
+        <span> Due Date: {{chapter.duedate}}</span>
+        <i id="chapter-{{chapter.id}}-dashboard" class="fas fa-clipboard-check chapter-complete"></i>
+    </div>
+    {% endfor %}
+</div>
 <div class="book-list">
     {% for id, values in books.items %}
     <a href="/books/{{id}}"><div class="dashboard-book-card">
@@ -30,20 +44,6 @@
         {% endif %}
         <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
         
-    </div>
-    {% endfor %}
-</div>
-<div id="dashboard-to-do">
-    <h3>What should I read today?</h3>
-    {% for chapter in to_do %}
-    {% if chapter.is_late %}
-    <div class="chapter-card overdue" id="chapter-card-{{chapter.id}}">
-    {% else %}
-    <div class="chapter-card" id="chapter-card-{{chapter.id}}">
-    {% endif%}
-        <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
-        <span> Due Date: {{chapter.duedate}}</span>
-        <i id="chapter-{{chapter.id}}-dashboard" class="fas fa-clipboard-check chapter-complete"></i>
     </div>
     {% endfor %}
 </div>
