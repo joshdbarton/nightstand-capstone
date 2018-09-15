@@ -54,10 +54,10 @@ Group Progress Box
 Dashboard Book Card
 **************************/
 .dashboard-book-card {
-    width: 154px;
+    width: 152px;
     margin: 0 auto 10px auto;
     color: black;
-    border: solid 2px darkgray;
+    border: solid 1px darkgray;
     border-radius: 3px;
     
 }
@@ -99,7 +99,7 @@ Chapter Card
 }
 .chapter-card {
     background-color: whitesmoke;
-    border: solid 2px darkgray;
+    border: solid 1px darkgray;
     border-radius: 3px;
     margin-bottom: 5px;
     font: .75em; 
@@ -116,7 +116,7 @@ Comment Card
     color: gray;
 }
 .comment-card {
-    border: 2px solid darkgray;
+    border: 1px solid darkgray;
     border-radius: 3px;
     margin-bottom: 5px;
 }
