@@ -6,7 +6,7 @@ Group Progress Box
 }
 
 .reader-square {
-    background-color: bisque;
+    background-color: whitesmoke;
 }
 
 .reader-square-overdue {
@@ -37,7 +37,7 @@ Group Progress Box
 
 .reader-div {
     width: 100px;
-    text-align: center
+    text-align: center;
 }
 
 .group-chapter-card, 
@@ -48,6 +48,7 @@ Group Progress Box
 .square {
     height: 70px;
 }
+
 
 /**************************
 Dashboard Book Card
@@ -103,6 +104,9 @@ Chapter Card
 /**************************
 Comment Card
 **************************/
+.like-button:hover {
+    color: gray;
+}
 
 /**************************
 Dashboard Layout

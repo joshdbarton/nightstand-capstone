@@ -22,11 +22,11 @@
         <h6>{{comment.chapter.book}}</h6>
         <p>{{comment.content}}</p>
         {% if reader in comment.likes.all %}
-        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Unlike"/>
+        <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% else %}
-        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Like"/>
+        <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% endif %}
-        <p>Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p> 
+        <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
         
     </div>
     {% endfor %}

@@ -11,7 +11,7 @@
 </div>
 <div id="group-progress">
         <div id="group-chapters">
-                <div class="reader-header">Group Progress</div>
+                <!-- <div class="reader-header">Group Progress</div> -->
                 {% for chapter in group.groupchapter_set.all %}
                 <div class="group-chapter-card" id="chapter-card-{{chapter.id}}">
                     <p>{{chapter.chapter}}</p>
@@ -24,9 +24,9 @@
         <div id="readers-progress">
                 {% for reader, values in readers.items %}
                     <div class="reader-div", id={{reader}}>
-                        <div class="reader-header">{{reader}}</div>
+                        <!-- <div class="reader-header">{{reader}}</div> -->
                         {% for value in values %}
-                            <div class="square reader-square{{value}}"></div>
+                            <div class="square reader-square{{value}}"><p>{{reader}}</p></div>
                         {% endfor %}
                     </div>
                 {% endfor %}

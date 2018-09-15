@@ -9,13 +9,15 @@ $(".like-button").click(event => {
             "Content-Type": "application/json",
         }
     })
-    if (event.target.value === "Like") {
-        $(`#${event.target.id}`).val("Unlike")
+    if ($(`#${event.target.id}`).hasClass("far")) {
+        $(`#${event.target.id}`).removeClass("far")
+        $(`#${event.target.id}`).addClass("fas")
         let likeCount = parseInt($(`#like-count-${event.target.id.split("-")[1]}`).text());
         likeCount ++;
         $(`#like-count-${event.target.id.split("-")[1]}`).text( likeCount.toString())
     } else {
-        $(`#${event.target.id}`).val("Like")
+        $(`#${event.target.id}`).removeClass("fas")
+        $(`#${event.target.id}`).addClass("far")
         let likeCount = parseInt($(`#like-count-${event.target.id.split("-")[1]}`).text());
         likeCount --;
         $(`#like-count-${event.target.id.split("-")[1]}`).text(likeCount.toString())
