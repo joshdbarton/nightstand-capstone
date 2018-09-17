@@ -262,7 +262,12 @@ def delete_user_book(request, pk):
         group.readers.remove(reader)
     return redirect("/dashboard/")
 
-    
+@login_required()
+def leave_group(request, pk):
+    reader = Reader.objects.get(user=request.user)
+    group = Group.objects.get(pk=pk)
+    group.readers.remove(reader)
+    return redirect("/dashboard/")
             
                
     

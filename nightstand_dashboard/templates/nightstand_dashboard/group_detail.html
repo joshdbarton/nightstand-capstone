@@ -1,12 +1,13 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-{% if reader not in group.readers.all %}
-<a href="/group_add/{{group.id}}"><input type="button" value="Join Group"/></a>
-{% endif %}
 <div class="group-detail-card">
     <img src="{{group.book.thumbnail}}" alt="{{book.title}} cover" width="150"/>
-    <h2>{{group}}</h2>
+    <h2>{{group}}{% if reader not in group.readers.all %}
+            <a href="/group_add/{{group.id}}"><button type="button" class="btn btn-info">Join Group</button></a>
+            {% else %}
+            <a href="/leave_group/{{group.id}}"><button type="button" class="btn btn-danger">Leave Group</button></a>
+            {% endif %}</h2>
     <h3>{{group.book}} <a href="/books/{{group.book.id}}"><i class="fas fa-external-link-alt"></i></a></h3>
 </div>
 <div id="group-progress">
