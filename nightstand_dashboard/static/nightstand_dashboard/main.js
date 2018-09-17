@@ -46,40 +46,49 @@ $(".chapter-complete").click(event => {
 
 // event handler to update duedate
 $(".duedate-update").click(event => {
-    const currentDate = new Date()
+    const currentDate = new Date().toISOString()
     const chapt = event.target.id.split("-")[1]
     if (event.target.id.split("-")[0] === "groupDueDate") {
         const newdate = $(`#groupDueDateField-${chapt}`).val()
-        $.ajax(`/duedate/${chapt}?type=group`, 
-    {
-        "method": "POST", 
-        "data": JSON.stringify({"newdate": newdate}),
-        "credentials": "include",
-        "headers": {
-            "X-CSRFToken": document.cookie.split("=")[1],
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-    }})
+        if (newdate) {
+            $.ajax(`/duedate/${chapt}?type=group`, 
+            {
+                "method": "POST", 
+                "data": JSON.stringify({"newdate": newdate}),
+                "credentials": "include",
+                "headers": {
+                    "X-CSRFToken": document.cookie.split("=")[1],
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }
+            })
+        }
     } else {
         const newdate = $(`#chapterDueDateField-${chapt}`).val()
-        $.ajax(`/duedate/${chapt}?type=reader`, 
-        {
-            "method": "POST", 
-            "data": JSON.stringify({"newdate": newdate}),
-            "credentials": "include",
-            "headers": {
-                "X-CSRFToken": document.cookie.split("=")[1],
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-        }})
-        if (currentDate > newdate) {
-            if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
-                $(`#chapter-card-${chapt}`).addClass("overdue")
-            }
-        } else if (currentDate < newdate) {
-            if ($(`#chapter-card-${chapt}`).hasClass("overdue")) {
-                $(`#chapter-card-${chapt}`).removeClass("overdue")
-            }
+        if (newdate) {
+            $.ajax(`/duedate/${chapt}?type=reader`, 
+            {
+                "method": "POST", 
+                "data": JSON.stringify({"newdate": newdate}),
+                "credentials": "include",
+                "headers": {
+                    "X-CSRFToken": document.cookie.split("=")[1],
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }
+            })
+        }
+        if (!$(`#chapter-card-${chapt}`).hasClass("completed") && newdate) {
+            if (currentDate > newdate) {
+                if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
+                    $(`#chapter-card-${chapt}`).addClass("overdue")
+                }
+            } else if (currentDate < newdate) {
+                if ($(`#chapter-card-${chapt}`).hasClass("overdue")) {
+                    $(`#chapter-card-${chapt}`).removeClass("overdue")
+                }
+            }     
         }
     }   
 })
+

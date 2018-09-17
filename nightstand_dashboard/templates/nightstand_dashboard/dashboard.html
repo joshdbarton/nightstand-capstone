@@ -17,14 +17,17 @@
 </div>
 <div class="book-list">
     {% for id, values in books.items %}
-    <a href="/books/{{id}}"><div class="dashboard-book-card">
-        <div class="image-wrapper">
-            <img src="{{values.1}}" alt="{{values.0}}" width="150" height="225"/>
-        </div>
+    <div class="dashboard-book-card">
+        <a href="/delete_user_book/{{id}}"><i class="far fa-trash-alt"></i></a>
+        <a href="/books/{{id}}">
+            <div class="image-wrapper">
+                <img src="{{values.1}}" alt="{{values.0}}" width="150" height="225"/>
+            </div>
+        </a>
         <div class="progress-div">
             <div class="progress-bar" style="height:15px;width:{{values.2}}%"></div>
         </div>
-    </div></a>
+    </div>
     {% endfor %}
 </div>
 <div id="dashboard-comments">

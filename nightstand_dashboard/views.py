@@ -249,7 +249,18 @@ def create_group(request, olid):
         form = CreateGroupForm()
         return render(request, "nightstand_dashboard/create_group.html", {"form": form, "book": book})
 
-
+@login_required()
+def delete_user_book(request, pk):
+    reader = Reader.objects.get(user=request.user)
+    book = Book.objects.get(pk=pk)
+    book.readers.remove(reader)
+    for chapter in book.chapter_set.all():
+        reader_chapter = ReaderChapter.objects.get(chapter=chapter, reader=reader)
+        reader_chapter.delete()
+    groups = Group.objects.filter(book=book)
+    for group in groups:
+        group.readers.remove(reader)
+    return redirect("/dashboard/")
 
     
             
