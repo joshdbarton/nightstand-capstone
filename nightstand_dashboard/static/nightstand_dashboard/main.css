@@ -189,3 +189,11 @@ a i {
 .group-chapter-card p {
     margin-bottom: 0;
 }
+
+.group-detail-card a {
+    color: black;
+}
+
+.group-detail-card a:hover {
+    color: gray;
+}

@@ -16,10 +16,10 @@
     <p>Chapter: {{book_chapter.chapter}}</p>
     <input id="chapterDueDateField-{{book_chapter.id}}" type="date" value="{{book_chapter.duedate|date:'Y-m-d'}}"/>
     <i class="fas fa-edit duedate-update" id="chapterDueDate-{{book_chapter.id}}"></i>
-    {% if not book_chapter.completed%}
-    <input class="chapter-complete" id="chapter-{{book_chapter.id}}" type="button" value="completed"/>
-    {% endif %}
     <a href="/comment/{{book_chapter.chapter.id}}?next=book"><i class="far fa-comment"></i></a>
+    {% if not book_chapter.completed%}
+    <i id="chapter-{{chapter.id}}" class="fas fa-clipboard-check chapter-complete"></i>
+    {% endif %}
 </div>
 {% endfor %}
 <div id="book-detail-comments">
