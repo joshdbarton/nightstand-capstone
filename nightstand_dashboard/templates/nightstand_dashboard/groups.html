@@ -1,14 +1,14 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-<a href="/create_group/{{olid}}"><input type="button" value="Create Group"></a>
+<a href="/create_group/{{olid}}"><button class="btn btn-warning">Create Group</button></a>
 {% if groups %}
 {% for group in groups %}
 <div class="group-card">
-    <img src={{group.book.thumbnail}} alt={{group.book}} width="50">
-    <h4>{{group.book}}</h4>
-    <h3>{{group}}</h3>
-    <a href="/groups/{{group.id}}"><input type="button" value="View Group"/></a>
+    <img src={{group.book.thumbnail}} alt={{group.book}} width="150">
+    <h4>{{group}}</h4>
+    <p>{{group.book}}</p>
+    <a href="/groups/{{group.id}}"><button class="btn btn-primary">View Group</button></a>
 </div>
 {% endfor %}
 {% elif message %}
