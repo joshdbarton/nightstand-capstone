@@ -91,7 +91,7 @@ def book_view(request, pk):
             book_chapters.append(ReaderChapter.objects.get(chapter=chapter, reader=reader))
             book_comments += chapter.chaptercomment_set.all()
         comments = sorted(book_comments, reverse=True, key= lambda k: k.datetime)
-        return render(request, 'nightstand_dashboard/book_view.html', {"book": book, "book_chapters": book_chapters, "comments": comments, "reader": reader, "groups": groups})
+        return render(request, 'nightstand_dashboard/book_view.html', {"book": book, "book_chapters": book_chapters, "comments": comments, "reader": reader, "groups": book_reader_groups})
     else:
         return HttpResponseForbidden()
 
