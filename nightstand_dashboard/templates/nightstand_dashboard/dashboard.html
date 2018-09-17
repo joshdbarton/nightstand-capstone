@@ -1,54 +1,56 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-<div id="dashboard-to-do">
-    <h3>What should I read today?</h3>
-    {% for chapter in to_do %}
-    {% if chapter.is_late %}
-    <div class="chapter-card overdue" id="chapter-card-{{chapter.id}}">
-    {% else %}
-    <div class="chapter-card" id="chapter-card-{{chapter.id}}">
-    {% endif%}
-        <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
-        <span> Due Date: {{chapter.duedate}}</span>
-        <i id="chapter-{{chapter.id}}-dashboard" class="fas fa-clipboard-check chapter-complete"></i>
-    </div>
-    {% endfor %}
-</div>
-<div class="book-list">
-    {% for id, values in books.items %}
-    <div class="dashboard-book-card">
-        <a href="/delete_user_book/{{id}}"><i class="far fa-trash-alt"></i></a>
-        <a href="/books/{{id}}">
-            <div class="image-wrapper">
-                <img src="{{values.1}}" alt="{{values.0}}" width="150" height="225"/>
-            </div>
-        </a>
-        <div class="progress-div">
-            <div class="progress-bar" style="height:15px;width:{{values.2}}%"></div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
-<div id="dashboard-comments">
-    <h3>Recent Comments</h3>
-    {% for comment in comments %}
-    <div class="card comment-card">
-            <div class="card-header">
-                <span>{{comment.chapter.book}}:</span>
-                <span>{{comment.chapter}}</span>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">{{comment}}</h5>
-              <p class="card-text"><em>{{comment.content}}</em></p>
-        {% if reader in comment.likes.all %}
-            <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+<div class ="view-container">
+    <div id="dashboard-to-do">
+        <h3>What should I read today?</h3>
+        {% for chapter in to_do %}
+        {% if chapter.is_late %}
+        <div class="chapter-card overdue" id="chapter-card-{{chapter.id}}">
         {% else %}
-            <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
-        {% endif %}
-        <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
-            </div>
+        <div class="chapter-card" id="chapter-card-{{chapter.id}}">
+        {% endif%}
+            <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
+            <span> Due Date: {{chapter.duedate}}</span>
+            <i id="chapter-{{chapter.id}}-dashboard" class="fas fa-clipboard-check chapter-complete"></i>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    <div id="book-list">
+        {% for id, values in books.items %}
+        <div class="dashboard-book-card">
+            <a href="/delete_user_book/{{id}}"><i class="far fa-trash-alt"></i></a>
+            <a href="/books/{{id}}">
+                <div class="image-wrapper">
+                    <img src="{{values.1}}" alt="{{values.0}}" width="150" height="225"/>
+                </div>
+            </a>
+            <div class="progress-div">
+                <div class="progress-bar" style="height:15px;width:{{values.2}}%"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div id="dashboard-comments">
+        <h3>Recent Comments</h3>
+        {% for comment in comments %}
+        <div class="card comment-card">
+                <div class="card-header">
+                    <span>{{comment.chapter.book}}:</span>
+                    <span>{{comment.chapter}}</span>
+                </div>
+                <div class="card-body">
+                <h5 class="card-title">{{comment}}</h5>
+                <p class="card-text"><em>{{comment.content}}</em></p>
+            {% if reader in comment.likes.all %}
+                <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+            {% else %}
+                <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+            {% endif %}
+            <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
+                </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

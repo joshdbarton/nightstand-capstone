@@ -229,6 +229,41 @@ Media Queries
 **************************/
 @media only screen and (min-width: 750px) {
     /*Dashboard view*/
+    .view-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #dashboard-to-do {
+        order: 1;
+        width: 49.8%;
+        margin-right: 2px;
+    }
+    #dashboard-comments {
+        order: 2;
+        width: 49.8%;
+        max-height: 469px;
+    }
+    #book-list {
+        order: 3;
+        flex-grow: 2;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 98%;
+    }
+    .dashboard-book-card {
+        margin: 0 5px 0 0;
+    }
+
+    #book-list, #dashboard-comments, #dashboard-to-do {
+        border: solid 1px black;
+        border-radius: 3px;
+        margin-bottom: 5px;
+        padding: 3px;
+    }
     /*Book Detail View*/
     /*Group Detail View*/
 }
