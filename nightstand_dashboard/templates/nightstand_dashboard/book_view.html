@@ -15,11 +15,11 @@
 {% endif %}
     <p>Chapter: {{book_chapter.chapter}}</p>
     <input id="chapterDueDateField-{{book_chapter.id}}" type="date" value="{{book_chapter.duedate|date:'Y-m-d'}}"/>
-    <input class="duedate-update" id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
+    <i class="fas fa-edit duedate-update" id="chapterDueDate-{{book_chapter.id}}"></i>
     {% if not book_chapter.completed%}
     <input class="chapter-complete" id="chapter-{{book_chapter.id}}" type="button" value="completed"/>
     {% endif %}
-    <a href="/comment/{{book_chapter.chapter.id}}?next=book"><input type="button" value="add comment" /></a>
+    <a href="/comment/{{book_chapter.chapter.id}}?next=book"><i class="far fa-comment"></i></a>
 </div>
 {% endfor %}
 <div id="book-detail-comments">
@@ -40,5 +40,5 @@
         <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
     </div>
     {% endfor %}
-</div>
+ </div>
 {% endblock %}

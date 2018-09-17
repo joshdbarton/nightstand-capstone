@@ -10,21 +10,23 @@
     <h3>{{group.book}}</h3>
 </div>
 <div id="group-progress">
-        <div id="group-chapters">
+    <div id="group-chapters">
+            <div style="height: 56px;">Users:</div>
                 {% for chapter in group.groupchapter_set.all %}
                 <div class="group-chapter-card" id="chapter-card-{{chapter.id}}">
                     <p>{{chapter.chapter}}</p>
-                    <input id="groupDueDateField-{{chapter.id}}" type="date" value="{{chapter.duedate|date:'Y-m-d'}}"/>
-                    <input class="duedate-update" id="groupDueDate-{{chapter.id}}" type="button" value="update"/>
-                    <a href="/comment/{{chapter.chapter.id}}?next=group&id={{group.id}}"><input type="button" value="add comment" /></a>
+                    <input id="groupDueDateField-{{chapter.id}}" type="date" value="{{chapter.duedate|date:'Y-m-d'}}" style="width: 152px;"/>
+                    <i class="fas fa-edit duedate-update" id="groupDueDate-{{chapter.id}}"></i>
+                    <a href="/comment/{{chapter.chapter.id}}?next=group&id={{group.id}}"><i class="far fa-comment"></i></a>
                 </div>
                 {% endfor %}
         </div>
         <div id="readers-progress">
                 {% for reader, values in readers.items %}
-                    <div class="reader-div", id={{reader}}>
+                <div class="reader-div", id={{reader}}>
+                        <div class="square">{{reader}}</div>
                         {% for value in values %}
-                            <div class="square reader-square{{value}}"><p>{{reader}}</p></div>
+                            <div class="square reader-square{{value}}"></div>
                         {% endfor %}
                     </div>
                 {% endfor %}
