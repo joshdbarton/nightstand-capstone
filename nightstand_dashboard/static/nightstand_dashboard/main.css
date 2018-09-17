@@ -134,6 +134,11 @@ Book Detail Layout
     width: 154px;
 }
 
+#book-detail-comments {
+    max-height: 650px;
+    overflow: scroll;
+}
+
 /**************************
 Group Detail Layout
 **************************/
@@ -161,6 +166,19 @@ a i {
     color: gray;
 }
 
+#group-comments {
+    max-height: 650px;
+    overflow: scroll;
+}
+
+.group-detail-card img {
+    float: left;
+    margin: 3px 5px 0 0;
+}
+
+#group-progress {
+    clear: both;
+}
 /**************************
 Form Layout
 **************************/
@@ -182,8 +200,6 @@ form {
     float: left;
     margin-right: 5px;
 }
-
-
 /**************************
 Search Results Layout
 **************************/
