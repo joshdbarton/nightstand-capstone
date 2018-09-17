@@ -4,6 +4,11 @@
 <div class="book-detail-card">
     <img src="{{book.thumbnail}}" alt="{{book.title}} cover" width="150"/>
     <h1>{{book.title}}</h1>
+    <h4>
+    {% for group in groups %}
+        <span class="badge badge-primary">{{group}}</span>
+    {%  endfor %}
+    </h4>
 </div>
 {% for book_chapter in book_chapters %}
 {% if book_chapter.completed %}

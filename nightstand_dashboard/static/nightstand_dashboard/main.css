@@ -171,6 +171,14 @@ Dashboard Layout
 Book Detail Layout
 **************************/
 
+.chapter-card {
+    padding: 2px;
+}
+
+.chapter-card input {
+    width: 154px;
+}
+
 /**************************
 Group Detail Layout
 **************************/

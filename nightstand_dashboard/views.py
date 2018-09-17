@@ -79,6 +79,11 @@ def book_view(request, pk):
     reader = Reader.objects.get(user=request.user)
     book = Book.objects.get(pk=pk)
     chapters = Chapter.objects.filter(book=book)
+    book_reader_groups = list()
+    groups = Group.objects.filter(book=book)
+    for group in groups:
+        if reader in group.readers.all():
+            book_reader_groups.append(group)
     if request.method == "GET":
         book_chapters = list()
         book_comments = list()
@@ -86,7 +91,7 @@ def book_view(request, pk):
             book_chapters.append(ReaderChapter.objects.get(chapter=chapter, reader=reader))
             book_comments += chapter.chaptercomment_set.all()
         comments = sorted(book_comments, reverse=True, key= lambda k: k.datetime)
-        return render(request, 'nightstand_dashboard/book_view.html', {"book": book, "book_chapters": book_chapters, "comments": comments, "reader": reader})
+        return render(request, 'nightstand_dashboard/book_view.html', {"book": book, "book_chapters": book_chapters, "comments": comments, "reader": reader, "groups": groups})
     else:
         return HttpResponseForbidden()
 
