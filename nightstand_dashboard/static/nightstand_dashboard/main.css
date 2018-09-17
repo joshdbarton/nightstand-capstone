@@ -173,3 +173,31 @@ form.auth {
     text-align: center;
     padding: 3px;
 }
+
+form {
+    margin-bottom: 5px;
+}
+
+.create-image {
+    float: left;
+    margin-right: 5px;
+}
+
+
+/**************************
+Search Results Layout
+**************************/
+
+.book-card img {
+    float: left;
+    margin-right: 5px;
+}
+
+.book-card {
+    clear: both;
+    overflow: auto;
+    margin-bottom: 2px;
+    border: solid 1px black;
+    border-radius: 3px;
+    padding: 2px;
+}
