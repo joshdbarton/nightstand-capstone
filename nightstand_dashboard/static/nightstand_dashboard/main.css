@@ -2,15 +2,15 @@
 Group Progress Box
 **************************/
 .reader-square-completed {
-    background-color: #4BB543;
+    background-color: #5cb85c;
 }
 
 .reader-square {
-    background-color: whitesmoke;
+    background-color: #f9f9f9;
 }
 
 .reader-square-overdue {
-    background-color: #FF0000;
+    background-color: #d9534f;
 }
 
 .reader-header {
@@ -63,20 +63,10 @@ Dashboard Book Card
     color: black;
     border: solid 1px darkgray;
     border-radius: 3px;
-    
-}
-
-.dashboard-book-card p {
-    margin-bottom: 0;
-}
-
-.book-list a {
-    text-decoration: none;
 }
 
 .dashboard-book-card:hover {
-    z-index: 100;
-    filter: blur(.05rem);
+    border: solid 1px black;
 }
 
 .progress-bar {
@@ -117,47 +107,10 @@ Chapter Card
     background-color: lightpink;
 }
 
-/**************************
-Comment Card
-**************************/
-.like-button:hover {
-    color: gray;
-}
-.comment-card {
-    border: 1px solid darkgray;
-    border-radius: 3px;
-    margin-bottom: 5px;
-}
-.comment-card span {
-    font-size: .65em;
-    padding: 2px;
-}
-.comment-card p {
-    margin-bottom: 0;
-    padding: 2px;
-}
-.comment-header {
-    background-color: darkgray;
-    color: white;
-}
-.comment-author {
-    border-bottom: solid 1px darkgray;
-}
-
-.comment-content {
-    overflow-wrap: break-word;
-}
 
 /**************************
 Dashboard Layout
 **************************/
-/* .book-list {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin-top: 5px;
-} */
 .book-list {
     max-height: 500px;
     overflow: scroll;
@@ -204,4 +157,17 @@ a i {
 
 .group-detail-card a:hover {
     color: gray;
+}
+
+/**************************
+Form Layout
+**************************/
+
+form {
+    margin: 10px auto 0 auto;
+    border: solid 1px black;
+    border-radius: 3px;
+    background-color: whitesmoke;
+    text-align: center;
+    padding: 3px;
 }

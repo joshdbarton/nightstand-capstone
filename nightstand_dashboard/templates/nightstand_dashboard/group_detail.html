@@ -8,11 +8,11 @@
             {% else %}
             <a href="/leave_group/{{group.id}}"><button type="button" class="btn btn-danger">Leave Group</button></a>
             {% endif %}</h2>
-    <h3>{{group.book}} <a href="/books/{{group.book.id}}"><i class="fas fa-external-link-alt"></i></a></h3>
+    <h3>{{group.book}}{% if reader in group.readers.all %} <a href="/books/{{group.book.id}}"><i class="fas fa-external-link-alt"></i></a> {% endif %}</h3>
 </div>
 <div id="group-progress">
     <div id="group-chapters">
-            <div style="height: 56px;">Users:</div>
+            <div style="height: 56px; margin: 2px;">Users:</div>
                 {% for chapter in group.groupchapter_set.all %}
                 <div class="group-chapter-card" id="chapter-card-{{chapter.id}}">
                     <p>{{chapter.chapter}}</p>
@@ -37,20 +37,21 @@
 <div id="group-comments">
     <h3>Recent Comments</h3>
     {% for comment in comments %}
-    <div class="comment-card">
-        <div class="comment-header">
-            <span>{{comment.chapter.book}}:</span>
-            <span>{{comment.chapter}}</span>
-        </div>
-        <p class="comment-author">{{comment}}</p>
-        <p class="comment-content"><em>{{comment.content}}</em></p>
+    <div class="card comment-card">
+            <div class="card-header">
+                <span>{{comment.chapter.book}}:</span>
+                <span>{{comment.chapter}}</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{comment}}</h5>
+              <p class="card-text"><em>{{comment.content}}</em></p>
         {% if reader in comment.likes.all %}
-        <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+            <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% else %}
-        <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+            <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% endif %}
         <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
-        
+            </div>
     </div>
     {% endfor %}
 </div>
