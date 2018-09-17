@@ -1,6 +1,6 @@
 // event handler for likes
 $(".like-button").click(event => {
-    $.ajax(`http://127.0.0.1:8000/like/${event.target.id.split("-")[1]}`, {
+    $.ajax(`/like/${event.target.id.split("-")[1]}`, {
         "method": 'GET',
         "data": {},
         "credentials": "include",
@@ -9,13 +9,15 @@ $(".like-button").click(event => {
             "Content-Type": "application/json",
         }
     })
-    if (event.target.value === "Like") {
-        $(`#${event.target.id}`).val("Unlike")
+    if ($(`#${event.target.id}`).hasClass("far")) {
+        $(`#${event.target.id}`).removeClass("far")
+        $(`#${event.target.id}`).addClass("fas")
         let likeCount = parseInt($(`#like-count-${event.target.id.split("-")[1]}`).text());
         likeCount ++;
         $(`#like-count-${event.target.id.split("-")[1]}`).text( likeCount.toString())
     } else {
-        $(`#${event.target.id}`).val("Like")
+        $(`#${event.target.id}`).removeClass("fas")
+        $(`#${event.target.id}`).addClass("far")
         let likeCount = parseInt($(`#like-count-${event.target.id.split("-")[1]}`).text());
         likeCount --;
         $(`#like-count-${event.target.id.split("-")[1]}`).text(likeCount.toString())
@@ -24,7 +26,7 @@ $(".like-button").click(event => {
 
 // event handler for completing chapters
 $(".chapter-complete").click(event => {
-    $.ajax(`http://127.0.0.1:8000/complete/${event.target.id.split("-")[1]}`, {
+    $.ajax(`/complete/${event.target.id.split("-")[1]}`, {
         "method": 'GET',
         "data": {},
         "credentials": "include",
@@ -44,40 +46,49 @@ $(".chapter-complete").click(event => {
 
 // event handler to update duedate
 $(".duedate-update").click(event => {
-    const currentDate = new Date()
+    const currentDate = new Date().toISOString()
     const chapt = event.target.id.split("-")[1]
     if (event.target.id.split("-")[0] === "groupDueDate") {
         const newdate = $(`#groupDueDateField-${chapt}`).val()
-        $.ajax(`http://127.0.0.1:8000/duedate/${chapt}?type=group`, 
-    {
-        "method": "POST", 
-        "data": JSON.stringify({"newdate": newdate}),
-        "credentials": "include",
-        "headers": {
-            "X-CSRFToken": document.cookie.split("=")[1],
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-    }})
+        if (newdate) {
+            $.ajax(`/duedate/${chapt}?type=group`, 
+            {
+                "method": "POST", 
+                "data": JSON.stringify({"newdate": newdate}),
+                "credentials": "include",
+                "headers": {
+                    "X-CSRFToken": document.cookie.split("=")[1],
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }
+            })
+        }
     } else {
         const newdate = $(`#chapterDueDateField-${chapt}`).val()
-        $.ajax(`http://127.0.0.1:8000/duedate/${chapt}?type=reader`, 
-        {
-            "method": "POST", 
-            "data": JSON.stringify({"newdate": newdate}),
-            "credentials": "include",
-            "headers": {
-                "X-CSRFToken": document.cookie.split("=")[1],
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-        }})
-        if (currentDate > newdate) {
-            if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
-                $(`#chapter-card-${chapt}`).addClass("overdue")
-            }
-        } else if (currentDate < newdate) {
-            if ($(`#chapter-card-${chapt}`).hasClass("overdue")) {
-                $(`#chapter-card-${chapt}`).removeClass("overdue")
-            }
+        if (newdate) {
+            $.ajax(`/duedate/${chapt}?type=reader`, 
+            {
+                "method": "POST", 
+                "data": JSON.stringify({"newdate": newdate}),
+                "credentials": "include",
+                "headers": {
+                    "X-CSRFToken": document.cookie.split("=")[1],
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }
+            })
+        }
+        if (!$(`#chapter-card-${chapt}`).hasClass("completed") && newdate) {
+            if (currentDate > newdate) {
+                if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
+                    $(`#chapter-card-${chapt}`).addClass("overdue")
+                }
+            } else if (currentDate < newdate) {
+                if ($(`#chapter-card-${chapt}`).hasClass("overdue")) {
+                    $(`#chapter-card-${chapt}`).removeClass("overdue")
+                }
+            }     
         }
     }   
 })
+

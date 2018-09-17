@@ -1,0 +1,207 @@
+/**************************
+Group Progress Box
+**************************/
+.reader-square-completed {
+    background-color: #4BB543;
+}
+
+.reader-square {
+    background-color: whitesmoke;
+}
+
+.reader-square-overdue {
+    background-color: #FF0000;
+}
+
+.reader-header {
+    margin: 0 2px 0 2px;
+}
+
+.group-chapter-card {
+    background-color: lightgray;
+    width: 197px;
+}
+
+ 
+#readers-progress {
+   display: flex;
+   flex-direction: row;
+}
+
+#group-progress {
+    display: flex;
+}
+
+.group-chapter-card,
+.reader-div, {
+    display: inline;
+}
+
+.reader-div {
+    text-align: center;
+}
+
+.group-chapter-card, 
+.square {
+    margin: 2px;
+}
+
+.square {
+    height: 56px;
+    width: 56px;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+
+/**************************
+Dashboard Book Card
+**************************/
+.dashboard-book-card {
+    width: 152px;
+    margin: 0 auto 10px auto;
+    color: black;
+    border: solid 1px darkgray;
+    border-radius: 3px;
+    
+}
+
+.dashboard-book-card p {
+    margin-bottom: 0;
+}
+
+.book-list a {
+    text-decoration: none;
+}
+
+.dashboard-book-card:hover {
+    z-index: 100;
+    filter: blur(.05rem);
+}
+
+.progress-bar {
+    background-color: greenyellow;
+}
+
+.image-wrapper {
+    width: 150px;
+    height: 225px;
+}
+
+.progress-div {
+    background-color: whitesmoke;
+}
+
+img {
+    object-fit: cover;
+}
+
+/**************************
+Chapter Card
+**************************/
+.chapter-complete {
+    font-size: 1.5em;
+}
+.chapter-complete:hover {
+    color: gray;
+}
+.chapter-card {
+    background-color: whitesmoke;
+    border: solid 1px darkgray;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font: .75em; 
+}
+
+.overdue {
+    background-color: lightpink;
+}
+
+/**************************
+Comment Card
+**************************/
+.like-button:hover {
+    color: gray;
+}
+.comment-card {
+    border: 1px solid darkgray;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+.comment-card span {
+    font-size: .65em;
+    padding: 2px;
+}
+.comment-card p {
+    margin-bottom: 0;
+    padding: 2px;
+}
+.comment-header {
+    background-color: darkgray;
+    color: white;
+}
+.comment-author {
+    border-bottom: solid 1px darkgray;
+}
+
+.comment-content {
+    overflow-wrap: break-word;
+}
+
+/**************************
+Dashboard Layout
+**************************/
+/* .book-list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 5px;
+} */
+.book-list {
+    max-height: 500px;
+    overflow: scroll;
+}
+#dashboard-comments {
+    max-height: 500px;
+    overflow: scroll;
+}
+
+/**************************
+Book Detail Layout
+**************************/
+
+.chapter-card {
+    padding: 2px;
+}
+
+.chapter-card input {
+    width: 154px;
+}
+
+/**************************
+Group Detail Layout
+**************************/
+i:hover {
+    color:gray;
+}
+
+a i {
+    color: black;
+}
+
+.group-chapter-card {
+    padding: 1px;
+}
+
+.group-chapter-card p {
+    margin-bottom: 0;
+}
+
+.group-detail-card a {
+    color: black;
+}
+
+.group-detail-card a:hover {
+    color: gray;
+}

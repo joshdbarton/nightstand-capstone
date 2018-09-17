@@ -4,6 +4,11 @@
 <div class="book-detail-card">
     <img src="{{book.thumbnail}}" alt="{{book.title}} cover" width="150"/>
     <h1>{{book.title}}</h1>
+    <h4>
+    {% for group in groups %}
+        <a href="/groups/{{group.id}}"><span class="badge badge-primary">{{group}}</span></a>
+    {%  endfor %}
+    </h4>
 </div>
 {% for book_chapter in book_chapters %}
 {% if book_chapter.completed %}
@@ -15,27 +20,30 @@
 {% endif %}
     <p>Chapter: {{book_chapter.chapter}}</p>
     <input id="chapterDueDateField-{{book_chapter.id}}" type="date" value="{{book_chapter.duedate|date:'Y-m-d'}}"/>
-    <input class="duedate-update" id="chapterDueDate-{{book_chapter.id}}" type="button" value="update"/>
+    <i class="fas fa-edit duedate-update" id="chapterDueDate-{{book_chapter.id}}"></i>
+    <a href="/comment/{{book_chapter.chapter.id}}?next=book"><i class="far fa-comment"></i></a>
     {% if not book_chapter.completed%}
-    <input class="chapter-complete" id="chapter-{{book_chapter.id}}" type="button" value="completed"/>
+    <i id="chapter-{{book_chapter.id}}" class="fas fa-clipboard-check chapter-complete"></i>
     {% endif %}
-    <a href="/comment/{{book_chapter.chapter.id}}?next=book"><input type="button" value="add comment" /></a>
 </div>
 {% endfor %}
 <div id="book-detail-comments">
-        <h3>Comments</h3>
-        {% for comment in comments %}
-        <div class="comment-card">
-            <h5>{{comment}}</h5>
-            <h6>Chapter: {{comment.chapter}}</h6>
-            <p>{{comment.content}}</p>
-            {% if reader in comment.likes.all %}
-            <input id="comment-{{comment.id}}" class="like-button" type="button" value="Unlike"/>
-            {% else %}
-            <input id="comment-{{comment.id}}" class="like-button" type="button" value="Like"/>
-            {% endif %}
-            <p >Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p>
+        <h3>Recent Comments</h3>
+    {% for comment in comments %}
+    <div class="comment-card">
+        <div class="comment-header">
+            <span>{{comment.chapter.book}}:</span>
+            <span>{{comment.chapter}}</span>
         </div>
-        {% endfor %}
+        <p class="comment-author">{{comment}}</p>
+        <p class="comment-content"><em>{{comment.content}}</em></p>
+        {% if reader in comment.likes.all %}
+        <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+        {% else %}
+        <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+        {% endif %}
+        <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
     </div>
+    {% endfor %}
+ </div>
 {% endblock %}

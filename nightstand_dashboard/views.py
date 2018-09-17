@@ -1,6 +1,9 @@
 import json
 import requests
+import datetime 
+import math
 from django.shortcuts import render, redirect
+from django.db.models import F 
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -52,18 +55,17 @@ def dashboard(request):
             if ReaderChapter.objects.get(reader=reader, chapter=chapter).completed:
                 completed_count += 1
             chapter_count += 1
-        progress = completed_count/chapter_count
+        progress = math.floor((completed_count/chapter_count)*100)
         context["books"][book.id].append(progress)
     context['comments'] = sorted(comments, reverse=True, key= lambda k: k.datetime)[:15]
     context["reader"] = reader
-    context["to_do"] = ReaderChapter.objects.filter(reader=reader, completed=False).order_by('duedate')[:5]
+    context["to_do"] = ReaderChapter.objects.filter(reader=reader, completed=False).order_by(F('duedate').asc(nulls_last=True))[:5]
     return render(request, "nightstand_dashboard/dashboard.html", context)
 
 @login_required()
 def add_book(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
-        books = list()
         param = {"q": form.data['search_term'].replace(" ", "+")}
         r = requests.get('http://localhost:3000/books', params=param)
         results = json.loads(r.text)
@@ -77,6 +79,11 @@ def book_view(request, pk):
     reader = Reader.objects.get(user=request.user)
     book = Book.objects.get(pk=pk)
     chapters = Chapter.objects.filter(book=book)
+    book_reader_groups = list()
+    groups = Group.objects.filter(book=book)
+    for group in groups:
+        if reader in group.readers.all():
+            book_reader_groups.append(group)
     if request.method == "GET":
         book_chapters = list()
         book_comments = list()
@@ -84,7 +91,7 @@ def book_view(request, pk):
             book_chapters.append(ReaderChapter.objects.get(chapter=chapter, reader=reader))
             book_comments += chapter.chaptercomment_set.all()
         comments = sorted(book_comments, reverse=True, key= lambda k: k.datetime)
-        return render(request, 'nightstand_dashboard/book_view.html', {"book": book, "book_chapters": book_chapters, "comments": comments, "reader": reader})
+        return render(request, 'nightstand_dashboard/book_view.html', {"book": book, "book_chapters": book_chapters, "comments": comments, "reader": reader, "groups": book_reader_groups})
     else:
         return HttpResponseForbidden()
 
@@ -187,8 +194,15 @@ def group_detail(request, pk):
     for reader in readers:
         chapters = list()
         for chapter in group.book.chapter_set.all():
-            chapters.append(ReaderChapter.objects.get(chapter=chapter, reader=reader))
-        context["readers"][reader.id] = chapters
+            group_chapter = GroupChapter.objects.get(chapter=chapter)
+            reader_chapter = ReaderChapter.objects.get(chapter=chapter, reader=reader)
+            if reader_chapter.completed:
+                chapters.append("-completed")
+            elif group_chapter.duedate and group_chapter.duedate < datetime.date.today():
+                chapters.append("-overdue")
+            else:
+                chapters.append("")
+        context["readers"][str(reader)] = chapters
     return render(request, "nightstand_dashboard/group_detail.html", context)
 
 
@@ -235,9 +249,25 @@ def create_group(request, olid):
         form = CreateGroupForm()
         return render(request, "nightstand_dashboard/create_group.html", {"form": form, "book": book})
 
+@login_required()
+def delete_user_book(request, pk):
+    reader = Reader.objects.get(user=request.user)
+    book = Book.objects.get(pk=pk)
+    book.readers.remove(reader)
+    for chapter in book.chapter_set.all():
+        reader_chapter = ReaderChapter.objects.get(chapter=chapter, reader=reader)
+        reader_chapter.delete()
+    groups = Group.objects.filter(book=book)
+    for group in groups:
+        group.readers.remove(reader)
+    return redirect("/dashboard/")
 
-
-    
+@login_required()
+def leave_group(request, pk):
+    reader = Reader.objects.get(user=request.user)
+    group = Group.objects.get(pk=pk)
+    group.readers.remove(reader)
+    return redirect("/dashboard/")
             
                
     

@@ -19,4 +19,6 @@ urlpatterns = [
     path("groups/<int:pk>", views.group_detail, name="group_detail"), 
     path("create_group/<slug:olid>", views.create_group, name="create_group"), 
     path("group_add/<int:pk>", views.group_add, name="group_add"),
+    path("delete_user_book/<int:pk>", views.delete_user_book, name="delete_user_book"),
+    path("leave_group/<int:pk>", views.leave_group, name="leave-group"),
 ]

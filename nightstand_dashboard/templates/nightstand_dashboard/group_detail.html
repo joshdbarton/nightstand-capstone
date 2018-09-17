@@ -1,37 +1,56 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-{% if reader not in group.readers.all %}
-<a href="/group_add/{{group.id}}"><input type="button" value="Join Group"/></a>
-{% endif %}
 <div class="group-detail-card">
     <img src="{{group.book.thumbnail}}" alt="{{book.title}} cover" width="150"/>
-    <h2>{{group}}</h2>
-    <h3>{{group.book}}</h3>
+    <h2>{{group}}{% if reader not in group.readers.all %}
+            <a href="/group_add/{{group.id}}"><button type="button" class="btn btn-info">Join Group</button></a>
+            {% else %}
+            <a href="/leave_group/{{group.id}}"><button type="button" class="btn btn-danger">Leave Group</button></a>
+            {% endif %}</h2>
+    <h3>{{group.book}} <a href="/books/{{group.book.id}}"><i class="fas fa-external-link-alt"></i></a></h3>
 </div>
-<div class="group-chapters">
-    {% for chapter in group.groupchapter_set.all %}
-    <div class="group-chapter-card" id="chapter-card-{{chapter.id}}">
-        <p>Chapter: {{chapter.chapter}}</p>
-        <input id="groupDueDateField-{{chapter.id}}" type="date" value="{{chapter.duedate|date:'Y-m-d'}}"/>
-        <input class="duedate-update" id="groupDueDate-{{chapter.id}}" type="button" value="update"/>
-        <a href="/comment/{{chapter.chapter.id}}?next=group&id={{group.id}}"><input type="button" value="add comment" /></a>
-    </div>
-    {% endfor %}
+<div id="group-progress">
+    <div id="group-chapters">
+            <div style="height: 56px;">Users:</div>
+                {% for chapter in group.groupchapter_set.all %}
+                <div class="group-chapter-card" id="chapter-card-{{chapter.id}}">
+                    <p>{{chapter.chapter}}</p>
+                    <input id="groupDueDateField-{{chapter.id}}" type="date" value="{{chapter.duedate|date:'Y-m-d'}}" style="width: 152px;"/>
+                    <i class="fas fa-edit duedate-update" id="groupDueDate-{{chapter.id}}"></i>
+                    <a href="/comment/{{chapter.chapter.id}}?next=group&id={{group.id}}"><i class="far fa-comment"></i></a>
+                </div>
+                {% endfor %}
+        </div>
+        <div id="readers-progress">
+                {% for reader, values in readers.items %}
+                <div class="reader-div", id={{reader}}>
+                        <div class="square">{{reader}}</div>
+                        {% for value in values %}
+                            <div class="square reader-square{{value}}"></div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
 </div>
+
 <div id="group-comments">
-    <h3>Comments</h3>
+    <h3>Recent Comments</h3>
     {% for comment in comments %}
     <div class="comment-card">
-        <h5>{{comment}}</h5>
-        <h6>Chapter: {{comment.chapter}}</h6>
-        <p>{{comment.content}}</p>
+        <div class="comment-header">
+            <span>{{comment.chapter.book}}:</span>
+            <span>{{comment.chapter}}</span>
+        </div>
+        <p class="comment-author">{{comment}}</p>
+        <p class="comment-content"><em>{{comment.content}}</em></p>
         {% if reader in comment.likes.all %}
-        <input id="comment-{{comment.id}}" class="like-button" type="button" value="Unlike"/>
+        <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% else %}
-        <input id="comment-{{comment.id}}" class="like-button" type="button" value="Like"/>
+        <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
         {% endif %}
-        <p >Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p>
+        <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
+        
     </div>
     {% endfor %}
 </div>

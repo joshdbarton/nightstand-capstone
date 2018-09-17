@@ -1,32 +1,6 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-{% for id, values in books.items %}
-<div class="dashboard-book-card">
-    <img src="{{values.1}}" alt="{{values.0}}" width="50"/>
-    <p><a href="/books/{{id}}">{{values.0}}</a></p>
-    <p>Progress: {{values.2}}</p>
-
-</div>
-{% endfor %}
-<div id="dashboard-comments">
-    <h3>Recent Comments</h3>
-    {% for comment in comments %}
-    <div class="comment-card">
-        <h5>{{comment}}</h5>
-        <h6>{{comment.chapter}}</h6>
-        <h6>{{comment.chapter.book}}</h6>
-        <p>{{comment.content}}</p>
-        {% if reader in comment.likes.all %}
-        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Unlike"/>
-        {% else %}
-        <input class="like-button" id="comment-{{comment.id}}" type="button" value="Like"/>
-        {% endif %}
-        <p>Likes: <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span></p> 
-        
-    </div>
-    {% endfor %}
-</div>
 <div id="dashboard-to-do">
     <h3>What should I read today?</h3>
     {% for chapter in to_do %}
@@ -36,8 +10,43 @@
     <div class="chapter-card" id="chapter-card-{{chapter.id}}">
     {% endif%}
         <h6>{{chapter.chapter.book}}: {{chapter.chapter}}</h6>
-        <p> Due: {{chapter.duedate}}</p>
-        <input class="chapter-complete" id="chapter-{{chapter.id}}-dashboard" type="button" value="complete"/>
+        <span> Due Date: {{chapter.duedate}}</span>
+        <i id="chapter-{{chapter.id}}-dashboard" class="fas fa-clipboard-check chapter-complete"></i>
+    </div>
+    {% endfor %}
+</div>
+<div class="book-list">
+    {% for id, values in books.items %}
+    <div class="dashboard-book-card">
+        <a href="/delete_user_book/{{id}}"><i class="far fa-trash-alt"></i></a>
+        <a href="/books/{{id}}">
+            <div class="image-wrapper">
+                <img src="{{values.1}}" alt="{{values.0}}" width="150" height="225"/>
+            </div>
+        </a>
+        <div class="progress-div">
+            <div class="progress-bar" style="height:15px;width:{{values.2}}%"></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div id="dashboard-comments">
+    <h3>Recent Comments</h3>
+    {% for comment in comments %}
+    <div class="comment-card">
+        <div class="comment-header">
+            <span>{{comment.chapter.book}}:</span>
+            <span>{{comment.chapter}}</span>
+        </div>
+        <p class="comment-author">{{comment}}</p>
+        <p class="comment-content"><em>{{comment.content}}</em></p>
+        {% if reader in comment.likes.all %}
+        <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+        {% else %}
+        <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+        {% endif %}
+        <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
+        
     </div>
     {% endfor %}
 </div>
