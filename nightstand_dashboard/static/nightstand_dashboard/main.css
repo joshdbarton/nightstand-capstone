@@ -96,7 +96,7 @@ Chapter Card
     color: gray;
 }
 .chapter-card {
-    background-color: whitesmoke;
+    background-color: #f9f9f9;
     border: solid 1px darkgray;
     border-radius: 3px;
     margin-bottom: 5px;
@@ -104,7 +104,7 @@ Chapter Card
 }
 
 .overdue {
-    background-color: lightpink;
+    background-color: #d9534f;
 }
 
 
@@ -123,7 +123,9 @@ Dashboard Layout
 /**************************
 Book Detail Layout
 **************************/
-
+.book-detail-card {
+    text-align: center;
+}
 .chapter-card {
     padding: 2px;
 }
@@ -163,7 +165,7 @@ a i {
 Form Layout
 **************************/
 
-form {
+form.auth {
     margin: 10px auto 0 auto;
     border: solid 1px black;
     border-radius: 3px;
