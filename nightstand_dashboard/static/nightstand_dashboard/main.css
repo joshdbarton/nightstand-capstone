@@ -88,6 +88,10 @@ Dashboard Book Card
     background-color: whitesmoke;
 }
 
+img {
+    object-fit: cover;
+}
+
 /**************************
 Chapter Card
 **************************/
