@@ -276,6 +276,7 @@ Media Queries
     }
     .detail-left  {
         width: 49.8%;
+        margin-right: 2px;
     }
     #book-detail-comments {
         width: 49.8%;
