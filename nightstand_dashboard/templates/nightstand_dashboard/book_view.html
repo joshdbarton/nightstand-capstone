@@ -5,13 +5,13 @@
     <div class="detail-left">
         <div class="book-detail-card">
             <img src="{{book.thumbnail}}" alt="{{book.title}} cover" width="150"/>
-            <h1>{{book.title}}</h1>
-            <h3>{{book.author}}</h3>
-            <h4>
+            <h3>{{book.title}}</h3>
+            <h5>{{book.author}}</h5>
+            <h6>
             {% for group in groups %}
                 <a href="/groups/{{group.id}}"><span class="badge badge-primary">{{group}}</span></a>
             {%  endfor %}
-            </h4>
+            </h6>
         </div>
         <div class="book-detail-chapters">
             {% for book_chapter in book_chapters %}

@@ -18,7 +18,7 @@ Group Progress Box
 }
 
 .group-chapter-card {
-    background-color: lightgray;
+    background-color: whitesmoke;
     width: 197px;
 }
 
@@ -287,10 +287,12 @@ Media Queries
     }
     .book-detail-card {
         height: calc(35vh - 35.35px);
+        text-align: left;
     }
 
     .book-detail-card img {
         float: left;
+        margin-right: 5px;
     }
     .detail-comment-box {
         height: calc(100vh - 134px);
