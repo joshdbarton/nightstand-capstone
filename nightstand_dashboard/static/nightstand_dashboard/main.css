@@ -2,15 +2,15 @@
 Group Progress Box
 **************************/
 .reader-square-completed {
-    background-color: #4BB543;
+    background-color: #5cb85c;
 }
 
 .reader-square {
-    background-color: whitesmoke;
+    background-color: #f9f9f9;
 }
 
 .reader-square-overdue {
-    background-color: #FF0000;
+    background-color: #d9534f;
 }
 
 .reader-header {
@@ -18,7 +18,7 @@ Group Progress Box
 }
 
 .group-chapter-card {
-    background-color: lightgray;
+    background-color: whitesmoke;
     width: 197px;
 }
 
@@ -63,20 +63,10 @@ Dashboard Book Card
     color: black;
     border: solid 1px darkgray;
     border-radius: 3px;
-    
-}
-
-.dashboard-book-card p {
-    margin-bottom: 0;
-}
-
-.book-list a {
-    text-decoration: none;
 }
 
 .dashboard-book-card:hover {
-    z-index: 100;
-    filter: blur(.05rem);
+    border: solid 1px black;
 }
 
 .progress-bar {
@@ -106,7 +96,7 @@ Chapter Card
     color: gray;
 }
 .chapter-card {
-    background-color: whitesmoke;
+    background-color: #f9f9f9;
     border: solid 1px darkgray;
     border-radius: 3px;
     margin-bottom: 5px;
@@ -114,69 +104,48 @@ Chapter Card
 }
 
 .overdue {
-    background-color: lightpink;
+    background-color: #d9534f;
 }
 
-/**************************
-Comment Card
-**************************/
-.like-button:hover {
-    color: gray;
-}
-.comment-card {
-    border: 1px solid darkgray;
-    border-radius: 3px;
-    margin-bottom: 5px;
-}
-.comment-card span {
-    font-size: .65em;
-    padding: 2px;
-}
-.comment-card p {
-    margin-bottom: 0;
-    padding: 2px;
-}
-.comment-header {
-    background-color: darkgray;
-    color: white;
-}
-.comment-author {
-    border-bottom: solid 1px darkgray;
-}
-
-.comment-content {
-    overflow-wrap: break-word;
-}
 
 /**************************
 Dashboard Layout
 **************************/
-/* .book-list {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    margin-top: 5px;
-} */
 .book-list {
     max-height: 500px;
     overflow: scroll;
 }
 #dashboard-comments {
     max-height: 500px;
+    
+}
+
+.comment-box-dashboard {
+    max-height: 420px;
     overflow: scroll;
+}
+
+.comment-card {
+    margin-bottom: 2px;
 }
 
 /**************************
 Book Detail Layout
 **************************/
-
+.book-detail-card {
+    text-align: center;
+}
 .chapter-card {
     padding: 2px;
 }
 
 .chapter-card input {
     width: 154px;
+}
+
+#book-detail-comments {
+    max-height: 650px;
+    overflow: scroll;
 }
 
 /**************************
@@ -204,4 +173,169 @@ a i {
 
 .group-detail-card a:hover {
     color: gray;
+}
+
+#group-comments {
+    max-height: 650px;
+    overflow: scroll;
+}
+
+.group-detail-card img {
+    float: left;
+    margin: 3px 5px 0 0;
+}
+
+#group-progress {
+    clear: both;
+}
+/**************************
+Form Layout
+**************************/
+
+form.auth {
+    margin: 10px auto 0 auto;
+    border: solid 1px black;
+    border-radius: 3px;
+    text-align: center;
+    padding: 3px;
+}
+
+form {
+    margin-bottom: 5px;
+}
+
+.create-image {
+    float: left;
+    margin-right: 5px;
+}
+/**************************
+Search Results Layout
+**************************/
+
+.book-card img {
+    float: left;
+    margin-right: 5px;
+}
+
+.book-card,
+.group-card {
+    clear: both;
+    overflow: auto;
+    margin-bottom: 2px;
+    border: solid 1px black;
+    border-radius: 3px;
+    padding: 2px;
+}
+
+.group-card img {
+    float: left;
+    margin-right: 5px;
+}
+
+/**************************
+Media Queries
+**************************/
+@media only screen and (min-width: 750px) {
+    /*Dashboard view*/
+    .view-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    #dashboard-to-do {
+        order: 1;
+        width: 49.8%;
+        margin-right: 2px;
+    }
+    #dashboard-comments {
+        order: 2;
+        width: 49.8%;
+        max-height: 469px;
+    }
+    #book-list {
+        order: 3;
+        flex-grow: 2;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 98%;
+    }
+    .dashboard-book-card {
+        margin: 0 5px 0 0;
+    }
+
+    #book-list, #dashboard-comments, #dashboard-to-do {
+        border: solid 1px black;
+        border-radius: 3px;
+        margin-bottom: 5px;
+        padding: 3px;
+    }
+    /*Book Detail View*/
+    .book-detail-container {
+        display: flex;
+        flex-direction: row;
+    }
+    .detail-left  {
+        width: 49.8%;
+        margin-right: 2px;
+    }
+    #book-detail-comments {
+        width: 49.8%;
+    }
+    .book-detail-chapters {
+        clear: both;
+        height: calc(65vh - 65.65px);
+        overflow: scroll;
+    }
+    .book-detail-card {
+        height: calc(35vh - 35.35px);
+        text-align: left;
+    }
+
+    .book-detail-card img {
+        float: left;
+        margin-right: 5px;
+    }
+    .detail-comment-box {
+        height: calc(100vh - 134px);
+        overflow: scroll;
+    }
+    /*Group Detail View*/
+    .group-view-div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .group-detail-card {
+        order: 1;
+        width: 49.8%;
+        padding: 2px;
+        border: solid 1px black;
+        border-radius: 3px;
+        margin-right: 2px;
+        margin-bottom: 2px;
+    }
+    #group-comments {
+        order: 2;
+        max-height: 400px;
+        width: 49.8%;
+        border: solid 1px black;
+        border-radius: 3px;
+        margin-bottom: 2px;
+        padding: 2px;
+        overflow: hidden;
+    }
+    .group-comments-box {
+        max-height: 370px;
+        overflow: scroll;
+    }
+    #group-progress {
+        order: 3;
+        width: 100%;
+        border: solid 1px black;
+        border-radius: 3px;
+    }
+
 }

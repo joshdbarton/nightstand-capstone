@@ -1,11 +1,11 @@
 {% extends 'nightstand_dashboard/base.html' %}
 
 {% block content %}
-<img src={{book.thumbnail}} alt={{book}} width="100">
+<img class="create-image" src={{book.thumbnail}} alt={{book}} width="100">
 <h4>{{book}}</h4>
-<form method="POST">
+<form class="create-form" method="POST">
     {% csrf_token %}
     {{form.as_p}}
-    <button type="submit">Start Group!</button>
+    <button class="btn btn-warning" type="submit">Start Group!</button>
 </form>
 {% endblock%}

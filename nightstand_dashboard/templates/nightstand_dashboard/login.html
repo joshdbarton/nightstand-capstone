@@ -1,8 +1,8 @@
 {% extends 'nightstand_dashboard/base.html' %}
 {% block content %}
-<form method="post">
+<form class="auth" method="post">
         {% csrf_token %}
         {{form.as_p}}
-        <input type="submit" value="Log in"/>
+        <button class="btn btn-info" type="submit">Login</button>
     </form>
 {% endblock %}
