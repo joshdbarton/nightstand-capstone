@@ -4,6 +4,7 @@
 <div class ="view-container">
     <div id="dashboard-to-do">
         <h3>What should I read today?</h3>
+        {% if to_do|length %}
         {% for chapter in to_do %}
         {% if chapter.is_late %}
         <div class="chapter-card overdue" id="chapter-card-{{chapter.id}}">
@@ -15,8 +16,12 @@
             <i id="chapter-{{chapter.id}}-dashboard" class="fas fa-clipboard-check chapter-complete"></i>
         </div>
         {% endfor %}
+        {% else %}
+        <p>All caught up! time to: </p><a href="/add_book/"><button class="btn btn-warning">Add a Book!</button></a>
+        {% endif %}
     </div>
     <div id="book-list">
+        {% if books|length %}
         {% for id, values in books.items %}
         <div class="dashboard-book-card">
             <a href="/delete_user_book/{{id}}"><i class="far fa-trash-alt"></i></a>
@@ -30,10 +35,14 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <p>No books!</p><a href="/add_book/"><button class="btn btn-warning">Add a Book!</button></a>
+        {% endif %}
     </div>
     <div id="dashboard-comments">
         <h3>Recent Comments</h3>
         <div class="comment-box-dashboard">
+            {% if comments|length %}
             {% for comment in comments %}
             <div class="card comment-card">
                     <div class="card-header">
@@ -52,6 +61,9 @@
                     </div>
             </div>
             {% endfor %}
+            {% else %}
+            <p>No recent comments...</p>
+            {% endif %}
         </div>
     </div>
 </div>
