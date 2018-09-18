@@ -67,7 +67,7 @@ def add_book(request):
     if request.method == "POST":
         form = SearchForm(request.POST)
         param = {"q": form.data['search_term'].replace(" ", "+")}
-        r = requests.get('http://localhost:3000/books', params=param)
+        r = requests.get('https://nightstand-db.herokuapp.com/books', params=param)
         results = json.loads(r.text)
         return render(request, 'nightstand_dashboard/add_book.html', {"form": form, "books": results})
     else:
@@ -105,7 +105,7 @@ def book_add(request, olid):
             ReaderChapter.objects.create(chapter=chapter, reader=reader)
         return redirect(f"/books/{book.id}")
     else:
-        r = requests.get(f'http://localhost:3000/books?olid={olid}')
+        r = requests.get(f'https://nightstand-db.herokuapp.com/books?olid={olid}')
         results = json.loads(r.text)
         book = results[0]
         chapters = book["chapters"]
@@ -239,7 +239,7 @@ def create_group(request, olid):
         if Book.objects.filter(OLID=olid).count():
             book = Book.objects.get(OLID=olid)
         else:
-            r = requests.get(f'http://localhost:3000/books?olid={olid}')
+            r = requests.get(f'https://nightstand-db.herokuapp.com/books?olid={olid}')
             results = json.loads(r.text)
             book = results[0]
             chapters = book["chapters"]
