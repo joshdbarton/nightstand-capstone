@@ -117,6 +117,11 @@ Dashboard Layout
 }
 #dashboard-comments {
     max-height: 500px;
+    
+}
+
+.comment-box-dashboard {
+    max-height: 420px;
     overflow: scroll;
 }
 
@@ -265,5 +270,31 @@ Media Queries
         padding: 3px;
     }
     /*Book Detail View*/
+    .book-detail-container {
+        display: flex;
+        flex-direction: row;
+    }
+    .detail-left  {
+        width: 49.8%;
+    }
+    #book-detail-comments {
+        width: 49.8%;
+    }
+    .book-detail-chapters {
+        clear: both;
+        height: calc(65vh - 65.65px);
+        overflow: scroll;
+    }
+    .book-detail-card {
+        height: calc(35vh - 35.35px);
+    }
+
+    .book-detail-card img {
+        float: left;
+    }
+    .detail-comment-box {
+        height: calc(100vh - 134px);
+        overflow: scroll;
+    }
     /*Group Detail View*/
 }

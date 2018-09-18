@@ -33,24 +33,26 @@
     </div>
     <div id="dashboard-comments">
         <h3>Recent Comments</h3>
-        {% for comment in comments %}
-        <div class="card comment-card">
-                <div class="card-header">
-                    <span>{{comment.chapter.book}}:</span>
-                    <span>{{comment.chapter}}</span>
-                </div>
-                <div class="card-body">
-                <h5 class="card-title">{{comment}}</h5>
-                <p class="card-text"><em>{{comment.content}}</em></p>
-            {% if reader in comment.likes.all %}
-                <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
-            {% else %}
-                <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
-            {% endif %}
-            <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
-                </div>
+        <div class="comment-box-dashboard">
+            {% for comment in comments %}
+            <div class="card comment-card">
+                    <div class="card-header">
+                        <span>{{comment.chapter.book}}:</span>
+                        <span>{{comment.chapter}}</span>
+                    </div>
+                    <div class="card-body">
+                    <h5 class="card-title">{{comment}}</h5>
+                    <p class="card-text"><em>{{comment.content}}</em></p>
+                {% if reader in comment.likes.all %}
+                    <i class="fas fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+                {% else %}
+                    <i class="far fa-thumbs-up like-button" id="comment-{{comment.id}}"></i>
+                {% endif %}
+                <span id="like-count-{{comment.id}}">{{comment.likes.count}}</span> 
+                    </div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
