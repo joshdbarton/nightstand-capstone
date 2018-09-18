@@ -125,6 +125,10 @@ Dashboard Layout
     overflow: scroll;
 }
 
+.comment-card {
+    margin-bottom: 2px;
+}
+
 /**************************
 Book Detail Layout
 **************************/
@@ -300,4 +304,39 @@ Media Queries
         overflow: scroll;
     }
     /*Group Detail View*/
+    .group-view-div {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .group-detail-card {
+        order: 1;
+        width: 49.8%;
+        padding: 2px;
+        border: solid 1px black;
+        border-radius: 3px;
+        margin-right: 2px;
+        margin-bottom: 2px;
+    }
+    #group-comments {
+        order: 2;
+        max-height: 400px;
+        width: 49.8%;
+        border: solid 1px black;
+        border-radius: 3px;
+        margin-bottom: 2px;
+        padding: 2px;
+        overflow: hidden;
+    }
+    .group-comments-box {
+        max-height: 370px;
+        overflow: scroll;
+    }
+    #group-progress {
+        order: 3;
+        width: 100%;
+        border: solid 1px black;
+        border-radius: 3px;
+    }
+
 }
