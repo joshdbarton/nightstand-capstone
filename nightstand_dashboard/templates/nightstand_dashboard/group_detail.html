@@ -38,6 +38,7 @@
     <div id="group-comments">
         <h3>Recent Comments</h3>
         <div class="group-comments-box">
+            {% if comments|length %}
             {% for comment in comments %}
             <div class="card comment-card">
                     <div class="card-header">
@@ -56,6 +57,9 @@
                     </div>
             </div>
             {% endfor %}
+            {% else %}
+            <p>No recent comments...</p>
+            {% endif %}
         </div>
     </div>
 </div>

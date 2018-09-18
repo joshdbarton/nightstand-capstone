@@ -22,6 +22,11 @@ Group Progress Box
     width: 197px;
 }
 
+.group-chapter-card p {
+    max-height: 24px;
+    overflow: scroll;
+}
+
  
 #readers-progress {
    display: flex;
