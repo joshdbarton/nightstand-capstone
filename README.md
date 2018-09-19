@@ -39,5 +39,5 @@ Run your dev server:
 python manage.py runserver
 ```
 
-That's it!  Navigate to [http://127.0.0.1:8000/] to start using the app. You can register new users, or use the superuser you already created to log in.  Note that the API contains 15 books for demonstration purposes only. If you would like to see all of the books that are there, search for "e". 
+That's it!  Navigate to http://127.0.0.1:8000/ to start using the app. You can register new users, or use the superuser you already created to log in.  Note that the API contains 15 books for demonstration purposes only. If you would like to see all of the books that are there, search for "e". 
 
