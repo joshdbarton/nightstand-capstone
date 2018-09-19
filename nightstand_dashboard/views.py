@@ -98,23 +98,27 @@ def book_view(request, pk):
 @login_required()
 def book_add(request, olid):
     reader = Reader.objects.get(user=request.user)
-    if Book.objects.filter(OLID=olid).count():
+    if reader.books.filter(OLID=olid).count():
         book = Book.objects.get(OLID=olid)
-        book.readers.add(reader)
-        for chapter in book.chapter_set.all():
-            ReaderChapter.objects.create(chapter=chapter, reader=reader)
         return redirect(f"/books/{book.id}")
     else:
-        r = requests.get(f'https://nightstand-db.herokuapp.com/books?olid={olid}')
-        results = json.loads(r.text)
-        book = results[0]
-        chapters = book["chapters"]
-        new_book = Book.objects.create(title=book["title"], OLID=book["olid"], author=book["author"], thumbnail=f"http://covers.openlibrary.org/b/olid/{book['olid']}-M.jpg", pages=book["pages"])
-        new_book.readers.add(reader)
-        for chapter in chapters:
-           new_chapter = Chapter.objects.create(book=new_book, name=chapter["title"].replace("--", ""))
-           ReaderChapter.objects.create(chapter=new_chapter, reader=reader)
-        return redirect(f"/books/{new_book.id}")
+        if Book.objects.filter(OLID=olid).count():
+            book = Book.objects.get(OLID=olid)
+            book.readers.add(reader)
+            for chapter in book.chapter_set.all():
+                ReaderChapter.objects.create(chapter=chapter, reader=reader)
+            return redirect(f"/books/{book.id}")
+        else:
+            r = requests.get(f'https://nightstand-db.herokuapp.com/books?olid={olid}')
+            results = json.loads(r.text)
+            book = results[0]
+            chapters = book["chapters"]
+            new_book = Book.objects.create(title=book["title"], OLID=book["olid"], author=book["author"], thumbnail=f"http://covers.openlibrary.org/b/olid/{book['olid']}-M.jpg", pages=book["pages"])
+            new_book.readers.add(reader)
+            for chapter in chapters:
+                new_chapter = Chapter.objects.create(book=new_book, name=chapter["title"].replace("--", ""))
+                ReaderChapter.objects.create(chapter=new_chapter, reader=reader)
+            return redirect(f"/books/{new_book.id}")
 
 @login_required()
 def like(request, pk):
