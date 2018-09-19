@@ -20,5 +20,24 @@ source my-env-name/bin/activate
 ```
 Once your environment is activated, clone the repo into your directory as well:
 ```
-git clone 
+git clone https://github.com/joshdbarton/nightstand-capstone.git
 ```
+Change to that directory and install requirements:
+
+```
+cd nightstand
+pip install -r requirements.txt
+```
+Migrate the database and create a superuser:
+```
+python manage.py makemigrations nightstand_dashboard
+python manage.py migrate
+python manage.py createsuperuser
+```
+Run your dev server:
+```
+python manage.py runserver
+```
+
+That's it!  Navigate to [http://127.0.0.1:8000/] to start using the app. You can register new users, or use the superuser you already created to log in.  Note that the API only contains 15 books for demonstration purposes only. If you would like to see all of the books that are there, search for "e". 
+
