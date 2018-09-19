@@ -25,7 +25,12 @@ SECRET_KEY = '@d#e2rb%ac2(ma^!t!dlp!)d2i9mc2f*$+c&v6br9rf!inb$6-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "104.248.182.198", 
+    "127.0.0.1", 
+    "localhost", 
+    "nightstand.joshdbarton.me"
+]
 
 
 # Application definition
@@ -125,3 +130,5 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = 'dashboard'
 
 LOGOUT_REDIRECT_URL = 'login'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
