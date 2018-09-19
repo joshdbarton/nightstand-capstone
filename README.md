@@ -11,13 +11,17 @@ This app was built with Python and the Django framework, with minimal Javascript
 
 ### Using the app
 
-If you would like to run this app locally follow these instructions:
+If you would like to run this app locally follow these instructions (You must have Python installed on your computer, or if you use virtualenv, python will come with the environment):
 
 First, create a directory on your computer where you would like the project to live.  Create a virtual environment inside that directory (I use [virtualenv](https://virtualenv.pypa.io/en/stable/) for this purpose, which you must have installed if you wish to use it):
+
+Mac:
 ```
 virtualenv my-env-name
 source my-env-name/bin/activate
 ```
+Windows users need to use `path/to/env/Scripts/activate.bat` to activate the environment
+
 Once your environment is activated, clone the repo into your directory as well:
 ```
 git clone https://github.com/joshdbarton/nightstand-capstone.git
