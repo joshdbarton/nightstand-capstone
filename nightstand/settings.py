@@ -26,7 +26,7 @@ SECRET_KEY = '@d#e2rb%ac2(ma^!t!dlp!)d2i9mc2f*$+c&v6br9rf!inb$6-'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "142.93.87.67", 
+    "104.248.182.198", 
     "127.0.0.1", 
     "localhost", 
     "nightstand.joshdbarton.me"
