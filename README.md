@@ -20,7 +20,7 @@ Mac:
 virtualenv my-env-name
 source my-env-name/bin/activate
 ```
-Windows users need to use `path/to/env/Scripts/activate.bat` to activate the environment
+Windows users check out [this guide](https://virtualenv.pypa.io/en/stable/userguide/) for setting up virtualenv with Windows.
 
 Once your environment is activated, clone the repo into your directory as well:
 ```
