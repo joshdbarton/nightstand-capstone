@@ -78,10 +78,8 @@ $(".duedate-update").click(event => {
                 }
             })
         }
-        const newdateDate = new Date(newdate)
-        console.log(newdate)
-        console.log(newdateDate)
-        console.log(currentDate)
+        const timezone = new Date().toString().split(" ")[5]
+        const newdateDate = new Date(`${newdate} ${timezone}`)
         if (!$(`#chapter-card-${chapt}`).hasClass("completed") && newdate) {
             if (currentDate >= newdateDate) {
                 if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
