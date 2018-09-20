@@ -198,7 +198,7 @@ def group_detail(request, pk):
     for reader in readers:
         chapters = list()
         for chapter in group.book.chapter_set.all():
-            group_chapter = GroupChapter.objects.get(chapter=chapter)
+            group_chapter = GroupChapter.objects.get(chapter=chapter, group=group)
             reader_chapter = ReaderChapter.objects.get(chapter=chapter, reader=reader)
             if reader_chapter.completed:
                 chapters.append("-completed")

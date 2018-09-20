@@ -46,7 +46,7 @@ $(".chapter-complete").click(event => {
 
 // event handler to update duedate
 $(".duedate-update").click(event => {
-    const currentDate = new Date().toISOString()
+    const currentDate = new Date()
     const chapt = event.target.id.split("-")[1]
     if (event.target.id.split("-")[0] === "groupDueDate") {
         const newdate = $(`#groupDueDateField-${chapt}`).val()
@@ -78,12 +78,16 @@ $(".duedate-update").click(event => {
                 }
             })
         }
+        const newdateDate = new Date(newdate)
+        console.log(newdate)
+        console.log(newdateDate)
+        console.log(currentDate)
         if (!$(`#chapter-card-${chapt}`).hasClass("completed") && newdate) {
-            if (currentDate > newdate) {
+            if (currentDate >= newdateDate) {
                 if (!$(`#chapter-card-${chapt}`).hasClass("overdue")) {
                     $(`#chapter-card-${chapt}`).addClass("overdue")
                 }
-            } else if (currentDate < newdate) {
+            } else if (currentDate < newdateDate) {
                 if ($(`#chapter-card-${chapt}`).hasClass("overdue")) {
                     $(`#chapter-card-${chapt}`).removeClass("overdue")
                 }
